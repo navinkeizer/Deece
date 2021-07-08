@@ -14,8 +14,8 @@ import (
 var infura string = "https://mainnet.infura.io/v3/5c04e573d61b4e5a8fc0f3312becfdbc"
 
 var (
-	shell  *ipfsapi.Shell
-	client *ethclient.Client
+	Shell  *ipfsapi.Shell
+	Client *ethclient.Client
 	TLI    string
 )
 
@@ -47,7 +47,7 @@ func b32Cid(bytes []byte) (string, error) {
 
 //simple way of ensuring we have pdf's
 //need more sophisticated way in future, e.g. directly getting the type of the file from ipfs
-func IsValidPdf(stream []byte) bool {
+func isValidPdf(stream []byte) bool {
 	//fmt.Println(stream)
 
 	l := len(stream)

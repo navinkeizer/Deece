@@ -2,6 +2,7 @@ package Deece
 
 import (
 	"github.com/ipfs/go-dnslink"
+	//shell "github.com/ipfs/go-ipfs-api"
 	"github.com/wealdtech/go-ens"
 	"io/ioutil"
 	"log"
@@ -11,7 +12,7 @@ import (
 //use go-ens to get CID's
 func getFromEns(ENSdomain string) ([]byte, string, error) {
 
-	resol, err := ens.NewResolver(client, ENSdomain)
+	resol, err := ens.NewResolver(Client, ENSdomain)
 	if err != nil {
 		log.Println(err)
 		return nil, "", err
@@ -61,7 +62,7 @@ func getFromDns(DNSdomain string) ([]byte, string, error) {
 }
 
 func getFromIpns(ipns string) ([]byte, string, error) {
-	link, err := shell.Resolve(ipns)
+	link, err := Shell.Resolve(ipns)
 	if err != nil {
 		log.Println(err)
 		return nil, "", err
@@ -80,7 +81,7 @@ func getFromIpns(ipns string) ([]byte, string, error) {
 }
 
 func getFromCid(CID string) ([]byte, error) {
-	cat, err := shell.Cat(CID)
+	cat, err := Shell.Cat(CID)
 	if err != nil {
 		log.Println(err)
 		return nil, err
@@ -98,7 +99,7 @@ func getFromCid(CID string) ([]byte, error) {
 		return nil, err
 	}
 
-	if !IsValidPdf(result) {
+	if !isValidPdf(result) {
 		err = &nopdf{CID}
 		log.Println(err)
 		return nil, err
@@ -114,39 +115,39 @@ func crawlInput(domaintype string, filename string) ([]byte, string, error) {
 	case "CID":
 		dat, err := getFromCid(filename)
 		if err != nil {
-			return nil, "", &CIDmissing{filename}
+			return nil, "", &cIDmissing{filename}
 		}
 		return dat, filename, nil
 
 	case "ENS":
 		dat, id, err := getFromEns(filename)
 		if err != nil && id == "" {
-			return nil, "", &NoENS{filename}
+			return nil, "", &noENS{filename}
 		}
 		if err != nil && id != "" {
-			return nil, "", &NoNSresolve{id, filename}
+			return nil, "", &noNSresolve{id, filename}
 		}
 		return dat, id, nil
 
 	case "DNS":
 		dat, id, err := getFromDns(filename)
 		if err != nil && id == "" {
-			return nil, "", &NoDNS{}
+			return nil, "", &noDNS{}
 		}
 		if err != nil && id != "" {
-			return nil, "", &NoNSresolve{id, filename}
+			return nil, "", &noNSresolve{id, filename}
 		}
 		return dat, id, nil
 
 	case "IPNS":
 		dat, id, err := getFromIpns(filename)
 		if err != nil && id == "" {
-			return nil, "", &Noipns{filename}
+			return nil, "", &noipns{filename}
 		}
 		if err != nil && id != "" {
-			return nil, "", &NoNSresolve{id, filename}
+			return nil, "", &noNSresolve{id, filename}
 		}
 		return dat, id, nil
 	}
-	return nil, "", &NoNSType{}
+	return nil, "", &noNSType{}
 }

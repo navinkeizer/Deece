@@ -11,13 +11,13 @@ import (
 	"time"
 )
 
-type incorrrectInput struct{}
+type IncorrrectInput struct{}
 
-func (zz *incorrrectInput) Error() string {
+func (zz *IncorrrectInput) Error() string {
 	return "Input type is not recognised."
 }
 
-func connectServer() (*ipfsapi.Shell, *ethclient.Client, string) {
+func ConnectServer() (*ipfsapi.Shell, *ethclient.Client, string) {
 	sh := ipfsapi.NewShell("localhost:5001")
 	sh.SetTimeout(time.Duration(10000000000))
 	cli, err := ethclient.Dial(infura)
@@ -28,7 +28,7 @@ func connectServer() (*ipfsapi.Shell, *ethclient.Client, string) {
 	return sh, cli, tli
 }
 
-func connectClient() (*ipfsapi.Shell, *ethclient.Client, string) {
+func ConnectClient() (*ipfsapi.Shell, *ethclient.Client, string) {
 	sh := ipfsapi.NewShell("localhost:5001")
 	sh.SetTimeout(time.Duration(10000000000))
 	cli, err := ethclient.Dial(infura)
@@ -45,7 +45,7 @@ func connectClient() (*ipfsapi.Shell, *ethclient.Client, string) {
 
 //TODO: return special structure output
 
-func doCrawlServer(name string, t string) {
+func DoCrawlServer(name string, t string) {
 
 	//CRAWLER
 	d, id, err := crawlInput(t, name)
@@ -70,7 +70,7 @@ func doCrawlServer(name string, t string) {
 	log.Println("Successful indexing.")
 }
 
-func doCrawlClient(name string, t string) {
+func DoCrawlClient(name string, t string) {
 
 	//CRAWLER
 	d, id, err := crawlInput(t, name)
@@ -95,14 +95,14 @@ func doCrawlClient(name string, t string) {
 	log.Println("Successful indexing.")
 }
 
-func doSearch(searchTerms []string) {
-	latestTLI, err := shell.Resolve(TLI)
+func DoSearch(searchTerms []string) {
+	latestTLI, err := Shell.Resolve(TLI)
 	if err != nil {
 		log.Println(err)
 	}
 	cidTLI := strings.Split(latestTLI, "s/")[1]
 
-	cat, err := shell.Cat(cidTLI)
+	cat, err := Shell.Cat(cidTLI)
 	if err != nil {
 		log.Println(err)
 	}

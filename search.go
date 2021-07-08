@@ -3,6 +3,7 @@ package Deece
 import (
 	"encoding/csv"
 	"fmt"
+	//shell "github.com/ipfs/go-ipfs-api"
 	"log"
 )
 
@@ -22,7 +23,7 @@ func printPerTerm(items []string, cids []string) error {
 			continue
 		}
 
-		cat, err := shell.Cat(cids[i])
+		cat, err := Shell.Cat(cids[i])
 		if err != nil {
 			log.Println(err)
 		}
@@ -57,14 +58,14 @@ func printResultsWord(items []string, cids []string) error {
 			return nil
 		}
 
-		cat1, err := shell.Cat(cids[0])
+		cat1, err := Shell.Cat(cids[0])
 		if err != nil {
 			return err
 		}
 		csvr1 := csv.NewReader(cat1)
 		records1, err := csvr1.ReadAll()
 
-		cat2, err := shell.Cat(cids[1])
+		cat2, err := Shell.Cat(cids[1])
 		if err != nil {
 			return err
 		}

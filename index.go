@@ -298,17 +298,17 @@ func updateTLIServer(entries [][]string) {
 	}
 
 	z, err := os.OpenFile("./TLI/TLI.csv", os.O_RDONLY, 0644)
-	cid, err := shell.Add(z)
+	cid, err := Shell.Add(z)
 	if err != nil {
 		log.Println(err)
 	}
 
-	shell.SetTimeout(time.Duration(1000000000000))
-	err = shell.Publish("", "/ipfs/"+cid)
+	Shell.SetTimeout(time.Duration(1000000000000))
+	err = Shell.Publish("", "/ipfs/"+cid)
 	if err != nil {
 		log.Println(err)
 	}
-	shell.SetTimeout(time.Duration(10000000000))
+	Shell.SetTimeout(time.Duration(10000000000))
 
 }
 
@@ -346,7 +346,7 @@ func updateTLIClient(entries [][]string) {
 	}
 
 	z, err := os.OpenFile("./TLI/TLI.csv", os.O_RDONLY, 0644)
-	cid, err := shell.Add(z)
+	cid, err := Shell.Add(z)
 	if err != nil {
 		log.Println(err)
 	}
@@ -366,17 +366,17 @@ func updateTLIClient(entries [][]string) {
 
 func checkTli(entry string) (bool, string, error) {
 
-	latestTLI, err := shell.Resolve(TLI)
+	latestTLI, err := Shell.Resolve(TLI)
 	if err != nil {
 		log.Println(err)
-		return false, "", &Noipns{TLI}
+		return false, "", &noipns{TLI}
 	}
 	cidTLI := strings.Split(latestTLI, "s/")[1]
 
-	cat, err := shell.Cat(cidTLI)
+	cat, err := Shell.Cat(cidTLI)
 	if err != nil {
 		log.Println(err)
-		return false, "", &CIDmissing{cidTLI}
+		return false, "", &cIDmissing{cidTLI}
 	}
 
 	result, err := ioutil.ReadAll(cat)
@@ -470,7 +470,7 @@ func createIndexEntryServer(data []string, cid string) {
 		// if index file is available add to it
 		// otherwise create one
 		if exist {
-			cat, err := shell.Cat(indexCID)
+			cat, err := Shell.Cat(indexCID)
 			if err != nil {
 
 			}
@@ -543,7 +543,7 @@ func createIndexEntryServer(data []string, cid string) {
 				if err != nil {
 				}
 
-				id, err := shell.Add(k)
+				id, err := Shell.Add(k)
 				if err != nil {
 				}
 
@@ -584,7 +584,7 @@ func createIndexEntryServer(data []string, cid string) {
 			if err != nil {
 			}
 
-			id, err := shell.Add(k)
+			id, err := Shell.Add(k)
 			if err != nil {
 			}
 
@@ -635,7 +635,7 @@ func createIndexEntryClient(data []string, cid string) {
 
 			//fmt.Println(s + " exists in TLI at " + indexCID)
 
-			cat, err := shell.Cat(indexCID)
+			cat, err := Shell.Cat(indexCID)
 			if err != nil {
 
 			}
@@ -708,7 +708,7 @@ func createIndexEntryClient(data []string, cid string) {
 				if err != nil {
 				}
 
-				id, err := shell.Add(k)
+				id, err := Shell.Add(k)
 				if err != nil {
 				}
 
@@ -749,7 +749,7 @@ func createIndexEntryClient(data []string, cid string) {
 			if err != nil {
 			}
 
-			id, err := shell.Add(k)
+			id, err := Shell.Add(k)
 			if err != nil {
 			}
 
