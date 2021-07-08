@@ -12,8 +12,7 @@ type nopdf struct{ cid string }
 type Noipns struct{ ipns string }
 type pdfreadfail struct{ name string }
 type existCheckFail struct{ name string }
-
-//type incorrrectInput struct {}
+type incorrrectInput struct{}
 
 func (k *NoNSType) Error() string {
 	return "Addressing convention not supported"
@@ -42,7 +41,6 @@ func (x *pdfreadfail) Error() string {
 func (xx *existCheckFail) Error() string {
 	return "Failed to check if '" + xx.name + "' exists."
 }
-
-//func (zz *incorrrectInput) Error() string {
-//	return "Input type is not recognised."
-//}
+func (zz *incorrrectInput) Error() string {
+	return "Input type is not recognised."
+}
