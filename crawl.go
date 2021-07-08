@@ -151,6 +151,8 @@ func crawlInput(domaintype string, filename string) ([]byte, string, error) {
 	return nil, "", &NoNSType{}
 }
 
+//TODO: return special structure output
+
 func doCrawlServer(name string, t string) {
 
 	//CRAWLER
