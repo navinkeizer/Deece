@@ -8,7 +8,7 @@ import (
 	"log"
 	"os"
 )
-
+//TODO: add to godoc once finished
 var app1 = cli.NewApp()
 
 
@@ -36,7 +36,7 @@ func commands1(){
 				if c.Args().Len() < 1{
 					return &Deece.IncorrrectInput{}
 				}
-				Deece.DoSearch(c.Args().Slice())
+				Deece.DoSearchClient(c.Args().Slice())
 				return nil
 			},
 		},
@@ -84,7 +84,7 @@ func commands1(){
 	}
 }
 
-func main() {
+func main0() {
 	Deece.Shell, Deece.Client, Deece.TLI = Deece.ConnectClient()
 	info1()
 	commands1()
