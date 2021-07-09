@@ -17,12 +17,9 @@ import (
 	"time"
 )
 
-//TODO: parameters from config file
 const (
-	serverIP      string = "127.0.0.1"
-	serverPort    int    = 3333
-	getMessage           = "GET,x"
-	StopCharacter        = "\r\n\r\n"
+	getMessage    = "GET,x"
+	StopCharacter = "\r\n\r\n"
 )
 
 func extractPdfData(filename string) ([]string, error) {

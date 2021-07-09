@@ -11,12 +11,13 @@ import (
 )
 
 //TODO: fetch this from config file, as well as tli
-var infura string = "https://mainnet.infura.io/v3/5c04e573d61b4e5a8fc0f3312becfdbc"
 
 var (
-	Shell  *ipfsapi.Shell
-	Client *ethclient.Client
-	TLI    string
+	Shell      *ipfsapi.Shell
+	Client     *ethclient.Client
+	TLI        string
+	serverPort int
+	serverIP   string
 )
 
 func b32Cid(bytes []byte) (string, error) {

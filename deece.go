@@ -2,13 +2,13 @@ package Deece
 
 import (
 	"encoding/csv"
+	"fmt"
 	"github.com/ethereum/go-ethereum/ethclient"
 	ipfsapi "github.com/ipfs/go-ipfs-api"
 	"io/ioutil"
 	"log"
 	"os"
 	"strings"
-	"time"
 )
 
 type IncorrrectInput struct{}
@@ -17,33 +17,36 @@ func (zz *IncorrrectInput) Error() string {
 	return "Input type is not recognised."
 }
 
-func ConnectServer() (*ipfsapi.Shell, *ethclient.Client, string) {
+func ConnectServer(Infura string, tli string, ip string, port int) (*ipfsapi.Shell, *ethclient.Client) {
+
 	sh := ipfsapi.NewShell("localhost:5001")
-	sh.SetTimeout(time.Duration(10000000000))
-	cli, err := ethclient.Dial(infura)
+	cli, err := ethclient.Dial(Infura)
 	if err != nil {
-		panic(err)
+		log.Println(err)
 	}
-	tli := "k2k4r8oxynrlparmnoh62lhk0ozhsdw8lizrcxjxs2w3jlllrqzi2bm8"
-	return sh, cli, tli
+	TLI = tli
+	serverPort = port
+	serverIP = ip
+	return sh, cli
 }
 
-func ConnectClient() (*ipfsapi.Shell, *ethclient.Client, string) {
+func ConnectClient(Infura string, tli string, ip string, port int) (*ipfsapi.Shell, *ethclient.Client) {
 	sh := ipfsapi.NewShell("localhost:5001")
-	sh.SetTimeout(time.Duration(10000000000))
-	cli, err := ethclient.Dial(infura)
+	fmt.Println("test")
+	cli, err := ethclient.Dial(Infura)
 	if err != nil {
-		panic(err)
+		log.Println(err)
 	}
-	tli, err := getTLI()
+
+	TLI, err = getTLI()
 	if err != nil || tli == "" {
 		log.Println(err)
-		tli = "k2k4r8oxynrlparmnoh62lhk0ozhsdw8lizrcxjxs2w3jlllrqzi2bm8"
+		TLI = "k2k4r8oxynrlparmnoh62lhk0ozhsdw8lizrcxjxs2w3jlllrqzi2bm8"
 	}
-	return sh, cli, tli
+	serverPort = port
+	serverIP = ip
+	return sh, cli
 }
-
-//TODO: return special structure output
 
 func DoCrawlServer(name string, t string) {
 
