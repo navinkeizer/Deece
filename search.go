@@ -21,7 +21,7 @@ func fetchIndex(searchTerm string, records [][]string) string {
 	return "-"
 }
 
-func printPerTerm(items []string, cids []string) error {
+func printPerTermClient(items []string, cids []string) error {
 	for i := 0; i < len(items); i++ {
 		fmt.Println(items[i] + ": ")
 		if cids[i] == "-" {
@@ -51,12 +51,52 @@ func printPerTerm(items []string, cids []string) error {
 	return nil
 }
 
+func printPerTermServer(items []string, cids []string) error {
+
+	var searchTerms []string
+	var searchResult = make([][]resultKeyword, int(len(items)))
+
+	for i := 0; i < len(items); i++ {
+		searchTerms = append(searchTerms, "'"+items[i]+"'")
+		//fmt.Println(items[i] + ": ")
+		if cids[i] == "-" {
+			continue
+		}
+
+		cat, err := Shell.Cat(cids[i])
+		if err != nil {
+			log.Println(err)
+		}
+
+		csvr := csv.NewReader(cat)
+		records, err := csvr.ReadAll()
+		if err != nil {
+		}
+
+		for j := 0; j < len(records); j++ {
+			searchResult[i] = append(searchResult[i], resultKeyword{records[j][0], records[j][1]})
+			//fmt.Println(records[j][0])
+		}
+		//fmt.Println()
+
+		err = cat.Close()
+		if err != nil {
+		}
+
+	}
+
+	fmt.Println(searchTerms)
+	fmt.Println(searchResult)
+
+	return nil
+}
+
 func printResultsWordClient(items []string, cids []string) error {
 
 	if len(items) == 2 {
 
 		if cids[0] == "-" || cids[1] == "-" {
-			err := printPerTerm(items, cids)
+			err := printPerTermClient(items, cids)
 			if err != nil {
 				return err
 			}
@@ -123,7 +163,7 @@ func printResultsWordClient(items []string, cids []string) error {
 		}
 
 	} else {
-		err := printPerTerm(items, cids)
+		err := printPerTermClient(items, cids)
 		if err != nil {
 			return err
 		}
@@ -136,14 +176,13 @@ func printResultsWordServer(items []string, cids []string) error {
 	if len(items) == 2 {
 
 		if cids[0] == "-" || cids[1] == "-" {
-			err := printPerTerm(items, cids)
+			err := printPerTermServer(items, cids)
 			if err != nil {
 				return err
 			}
 			return nil
 		}
 
-		//TODO: uncomment and finish
 		var searchTerms []string
 		var searchResult [3][]resultKeyword
 
@@ -224,7 +263,7 @@ func printResultsWordServer(items []string, cids []string) error {
 		fmt.Println(searchResult)
 
 	} else {
-		err := printPerTerm(items, cids)
+		err := printPerTermServer(items, cids)
 		if err != nil {
 			return err
 		}

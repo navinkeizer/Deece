@@ -95,7 +95,53 @@ func DoCrawlClient(name string, t string) {
 	log.Println("Successful indexing.")
 }
 
-func DoSearchClient(searchTerms []string) {}
+func DoSearchClient(searchTerms []string) {
+	latestTLI, err := Shell.Resolve(TLI)
+	if err != nil {
+		log.Println(err)
+	}
+	cidTLI := strings.Split(latestTLI, "s/")[1]
+
+	cat, err := Shell.Cat(cidTLI)
+	if err != nil {
+		log.Println(err)
+	}
+
+	result, err := ioutil.ReadAll(cat)
+	if err != nil {
+	}
+
+	err = cat.Close()
+	if err != nil {
+	}
+
+	err = ioutil.WriteFile("./TLI/TLI.csv", result, 0644)
+	if err != nil {
+	}
+
+	f, err := os.Open("./TLI/TLI.csv")
+	if err != nil {
+	}
+
+	csvr := csv.NewReader(f)
+	records, _ := csvr.ReadAll()
+
+	var indexLocations []string
+	// need to change to better performance search mechanism
+	for i := 0; i < len(searchTerms); i++ {
+		indexLocations = append(indexLocations, fetchIndex(searchTerms[i], records))
+	}
+
+	err = f.Close()
+	if err != nil {
+
+	}
+
+	err = printResultsWordClient(searchTerms, indexLocations)
+	if err != nil {
+
+	}
+}
 
 func DoSearchServer(searchTerms []string) {
 	latestTLI, err := Shell.Resolve(TLI)
