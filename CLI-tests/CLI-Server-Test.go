@@ -35,7 +35,7 @@ func commands(){
 				if c.Args().Len() < 1{
 					return &Deece.IncorrrectInput{}
 				}
-				Deece.DoSearch(c.Args().Slice())
+				Deece.DoSearchServer(c.Args().Slice())
 				return nil
 			},
 		},
@@ -84,7 +84,7 @@ func commands(){
 	}
 }
 
-func main1() {
+func main() {
 	Deece.Shell, Deece.Client, Deece.TLI = Deece.ConnectServer()
 	info()
 	commands()
