@@ -7,6 +7,11 @@ import (
 	"log"
 )
 
+type resultKeyword struct {
+	CID      string
+	metadata string
+}
+
 func fetchIndex(searchTerm string, records [][]string) string {
 	for j := 0; j < len(records); j++ {
 		if searchTerm == records[j][0] {
@@ -46,7 +51,7 @@ func printPerTerm(items []string, cids []string) error {
 	return nil
 }
 
-func printResultsWord(items []string, cids []string) error {
+func printResultsWordClient(items []string, cids []string) error {
 
 	if len(items) == 2 {
 
@@ -116,6 +121,107 @@ func printResultsWord(items []string, cids []string) error {
 		for q := 0; q < len(records2); q++ {
 			fmt.Println(records2[q][0])
 		}
+
+	} else {
+		err := printPerTerm(items, cids)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+func printResultsWordServer(items []string, cids []string) error {
+
+	if len(items) == 2 {
+
+		if cids[0] == "-" || cids[1] == "-" {
+			err := printPerTerm(items, cids)
+			if err != nil {
+				return err
+			}
+			return nil
+		}
+
+		//TODO: uncomment and finish
+		var searchTerms []string
+		var searchResult [3][]resultKeyword
+
+		cat1, err := Shell.Cat(cids[0])
+		if err != nil {
+			return err
+		}
+		csvr1 := csv.NewReader(cat1)
+		records1, err := csvr1.ReadAll()
+
+		cat2, err := Shell.Cat(cids[1])
+		if err != nil {
+			return err
+		}
+		csvr2 := csv.NewReader(cat2)
+		records2, err := csvr2.ReadAll()
+
+		//fmt.Println(len(records1))
+		//fmt.Println(len(records2))
+
+		var combinedresult [][]string
+		searchTerms = append(searchTerms, "'"+items[0]+" "+items[1]+"'")
+
+		if len(records1) > len(records2) {
+			for z := 0; z < len(records1); z++ {
+				for b := 0; b < len(records2); b++ {
+					if records1[z][0] == records2[b][0] {
+						combinedresult = append(combinedresult, records1[z])
+					}
+				}
+			}
+
+			//fmt.Println(items[0] + " " + items[1] + " : ")
+			//searchTerms = append(searchTerms,items[0] + " " + items[1])
+			//for j := 0; j < len(combinedresult); j++ {
+			//	searchResult[0] = append(searchResult[0], resultKeyword{combinedresult[j][0], combinedresult[j][1]})
+			//	//fmt.Println(combinedresult[j][0])
+			//}
+
+		} else {
+			for z := 0; z < len(records2); z++ {
+				for b := 0; b < len(records1); b++ {
+					if records2[z][0] == records1[b][0] {
+						combinedresult = append(combinedresult, records2[z])
+					}
+				}
+			}
+
+			//fmt.Println(items[0] + " " + items[1] + " : ")
+			//searchTerms = append(searchTerms,items[0] + " " + items[1])
+			//for j := 0; j < len(combinedresult); j++ {
+			//	//fmt.Println(combinedresult[j][0])
+			//	searchResult[0] = append(searchResult[0], resultKeyword{combinedresult[j][0], combinedresult[j][1]})
+			//}
+
+		}
+
+		for j := 0; j < len(combinedresult); j++ {
+			//fmt.Println(combinedresult[j][0])
+			searchResult[0] = append(searchResult[0], resultKeyword{combinedresult[j][0], combinedresult[j][1]})
+		}
+
+		//fmt.Println()
+		//fmt.Println(items[0] + " : ")
+		searchTerms = append(searchTerms, "'"+items[0]+"'")
+		for p := 0; p < len(records1); p++ {
+			searchResult[1] = append(searchResult[1], resultKeyword{records1[p][0], records1[p][1]})
+			//fmt.Println(records1[p][0])
+		}
+
+		searchTerms = append(searchTerms, "'"+items[1]+"'")
+		for q := 0; q < len(records2); q++ {
+			searchResult[2] = append(searchResult[2], resultKeyword{records2[q][0], records2[q][1]})
+			//fmt.Println(records2[q][0])
+		}
+
+		fmt.Println(searchTerms)
+		fmt.Println(searchResult)
 
 	} else {
 		err := printPerTerm(items, cids)

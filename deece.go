@@ -95,7 +95,9 @@ func DoCrawlClient(name string, t string) {
 	log.Println("Successful indexing.")
 }
 
-func DoSearch(searchTerms []string) {
+func DoSearchClient(searchTerms []string) {}
+
+func DoSearchServer(searchTerms []string) {
 	latestTLI, err := Shell.Resolve(TLI)
 	if err != nil {
 		log.Println(err)
@@ -137,7 +139,7 @@ func DoSearch(searchTerms []string) {
 
 	}
 
-	err = printResultsWord(searchTerms, indexLocations)
+	err = printResultsWordServer(searchTerms, indexLocations)
 	if err != nil {
 
 	}
