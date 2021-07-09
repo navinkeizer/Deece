@@ -1,5 +1,6 @@
 package Deece
 
+//defining the errors used to return throughout functions in the package
 type noNSType struct{}
 type noENS struct{ domain string }
 type noDNS struct{ domain string }
@@ -12,8 +13,7 @@ type nopdf struct{ cid string }
 type noipns struct{ ipns string }
 type pdfreadfail struct{ name string }
 type existCheckFail struct{ name string }
-
-//type incorrrectInput struct{}
+type IncorrrectInput struct{}
 
 func (k *noNSType) Error() string {
 	return "Addressing convention not supported"
@@ -42,7 +42,6 @@ func (x *pdfreadfail) Error() string {
 func (xx *existCheckFail) Error() string {
 	return "Failed to check if '" + xx.name + "' exists."
 }
-
-//func (zz *incorrrectInput) Error() string {
-//	return "Input type is not recognised."
-//}
+func (zz *IncorrrectInput) Error() string {
+	return "Input type is not recognised."
+}

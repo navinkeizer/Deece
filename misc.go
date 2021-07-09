@@ -10,8 +10,7 @@ import (
 	"github.com/wealdtech/go-multicodec"
 )
 
-//TODO: fetch this from config file, as well as tli
-
+//defining the global variables used
 var (
 	Shell      *ipfsapi.Shell
 	Client     *ethclient.Client
@@ -20,6 +19,7 @@ var (
 	serverIP   string
 )
 
+//function to convert to base32 encoding
 func b32Cid(bytes []byte) (string, error) {
 	data, codec, err := multicodec.RemoveCodec(bytes)
 	if err != nil {
@@ -47,7 +47,7 @@ func b32Cid(bytes []byte) (string, error) {
 }
 
 //simple way of ensuring we have pdf's
-//need more sophisticated way in future, e.g. directly getting the type of the file from ipfs
+//this will become more sophisticated in future releases
 func isValidPdf(stream []byte) bool {
 	//fmt.Println(stream)
 

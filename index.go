@@ -3,6 +3,7 @@ package Deece
 import (
 	"bytes"
 	"encoding/csv"
+	"fmt"
 	"github.com/bbalet/stopwords"
 	"github.com/gen2brain/go-fitz"
 	"github.com/ledongthuc/pdf"
@@ -613,6 +614,7 @@ func createIndexEntryClient(data []string, cid string) {
 	for _, s := range data {
 		//fmt.Println(s)
 		//remove empty or 1 letter entries
+		fmt.Println(s, time.Second)
 		if s == "" || len(s) == 1 {
 			continue
 		}
@@ -764,6 +766,7 @@ func createIndexEntryClient(data []string, cid string) {
 	//fmt.Println(ipnsEntries)
 	if ipnsEntries != nil {
 		//fmt.Println("adding to TLI")
+		fmt.Println("check3", time.Second)
 
 		updateTLIClient(ipnsEntries)
 	}

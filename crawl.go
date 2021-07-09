@@ -9,9 +9,9 @@ import (
 	"strings"
 )
 
-//use go-ens to get CID's
+//function to retrieve a file using ens name
+//uses the gateway provider specified in a config.json file
 func getFromEns(ENSdomain string) ([]byte, string, error) {
-
 	resol, err := ens.NewResolver(Client, ENSdomain)
 	if err != nil {
 		log.Println(err)
@@ -24,6 +24,7 @@ func getFromEns(ENSdomain string) ([]byte, string, error) {
 		return nil, "", err
 	}
 
+	//convert to ipfs readable format
 	link, err := b32Cid(q)
 	if err != nil {
 		log.Println(err)
@@ -41,8 +42,8 @@ func getFromEns(ENSdomain string) ([]byte, string, error) {
 	return file, cid, nil
 }
 
-// it seems like most dnslinks do not work
-//example which does work: "originprotocol.com"
+//function to retrieve a file using dnslink name
+// it seems like most dnslink names are not in use
 func getFromDns(DNSdomain string) ([]byte, string, error) {
 	link, err := dnslink.Resolve(DNSdomain)
 	if err != nil {
@@ -61,6 +62,7 @@ func getFromDns(DNSdomain string) ([]byte, string, error) {
 	return file, id, nil
 }
 
+//function to retrieve a file using ipns name
 func getFromIpns(ipns string) ([]byte, string, error) {
 	link, err := Shell.Resolve(ipns)
 	if err != nil {
@@ -80,6 +82,7 @@ func getFromIpns(ipns string) ([]byte, string, error) {
 
 }
 
+//function to retrieve a file using ipfs CID
 func getFromCid(CID string) ([]byte, error) {
 	cat, err := Shell.Cat(CID)
 	if err != nil {
@@ -98,7 +101,6 @@ func getFromCid(CID string) ([]byte, error) {
 		log.Println(err)
 		return nil, err
 	}
-
 	if !isValidPdf(result) {
 		err = &nopdf{CID}
 		log.Println(err)
@@ -109,6 +111,7 @@ func getFromCid(CID string) ([]byte, error) {
 
 }
 
+//function to start a crawl. Takes in the name of a file and the type
 func crawlInput(domaintype string, filename string) ([]byte, string, error) {
 
 	switch domaintype {
