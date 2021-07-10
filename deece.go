@@ -2,7 +2,6 @@ package Deece
 
 import (
 	"encoding/csv"
-	"fmt"
 	"github.com/ethereum/go-ethereum/ethclient"
 	ipfsapi "github.com/ipfs/go-ipfs-api"
 	"io/ioutil"
@@ -15,7 +14,7 @@ import (
 
 //function to setup the local connections to ipfs, eth gateway etc.
 //to be used at gateway server running the web interface
-func ConnectServer(Infura string, tli string, ip string, port int) (*ipfsapi.Shell, *ethclient.Client) {
+func ConnectServer(Infura string, tli string) (*ipfsapi.Shell, *ethclient.Client) {
 	sh := ipfsapi.NewShell("localhost:5001")
 	sh.SetTimeout(time.Duration(10000000000))
 	cli, err := ethclient.Dial(Infura)
@@ -124,6 +123,9 @@ func DoCrawlClient(name string, t string) error {
 	return nil
 }
 
+//TODO: fix problem running slow
+//TODO for client will need function in CLI
+
 func DoSearch1(query string) ([]QueryResult, error) {
 
 	searchTerms := strings.Split(query, " ")
@@ -132,6 +134,7 @@ func DoSearch1(query string) ([]QueryResult, error) {
 	latestTLI, err := Shell.Resolve(TLI)
 	if err != nil {
 		log.Println(err)
+		return nil, err
 	}
 
 	cidTLI := strings.Split(latestTLI, "s/")[1]
@@ -140,22 +143,31 @@ func DoSearch1(query string) ([]QueryResult, error) {
 	cat, err := Shell.Cat(cidTLI)
 	if err != nil {
 		log.Println(err)
+		return nil, err
 	}
 
 	result, err := ioutil.ReadAll(cat)
 	if err != nil {
+		log.Println(err)
+		return nil, err
 	}
 
 	err = cat.Close()
 	if err != nil {
+		log.Println(err)
+		return nil, err
 	}
 
 	err = ioutil.WriteFile("./TLI/TLI.csv", result, 0644)
 	if err != nil {
+		log.Println(err)
+		return nil, err
 	}
 
 	f, err := os.Open("./TLI/TLI.csv")
 	if err != nil {
+		log.Println(err)
+		return nil, err
 	}
 
 	csvr := csv.NewReader(f)
@@ -171,19 +183,18 @@ func DoSearch1(query string) ([]QueryResult, error) {
 		} else {
 			indexLocations = append(indexLocations, "-")
 		}
-
 	}
 	err = f.Close()
 	if err != nil {
 		log.Println(err)
+		return nil, err
 	}
 
 	qResult, err := resultsWordServer1(searchTerms, indexLocations)
 	if err != nil {
-
+		log.Println(err)
+		return nil, err
 	}
-
-	fmt.Println(qResult)
 
 	return qResult, nil
 }

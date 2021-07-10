@@ -13,19 +13,20 @@ import (
 var shell *ipfsapi.Shell
 
 const (
-	TLIcid      = "k51qzi5uqu5dm51kzdsr3pu33tkrzca5pse1kt3i9a7c5m1ai0kremf5c0ooe9"
+	TLIcid        = "k51qzi5uqu5dm51kzdsr3pu33tkrzca5pse1kt3i9a7c5m1ai0kremf5c0ooe9"
 	StopCharacter = "\r\n\r\n"
+	passWord      = "FsXEzxp1EVmJjSNAZh"
 )
 
 func isTransportOver(data string) (over bool) {
-	over = strings.HasSuffix(data, "\r\n\r\n")
+	over = strings.HasSuffix(data, StopCharacter)
 	return
 }
 
-func updateIPNS(newcid string)error{
+func updateIPNS(newcid string) error {
 	shell.SetTimeout(time.Duration(1000000000000))
 
-	err := shell.Publish("", "/ipfs/" +newcid)
+	err := shell.Publish("", "/ipfs/"+newcid)
 	if err != nil {
 		log.Println(err)
 		return err
@@ -34,7 +35,6 @@ func updateIPNS(newcid string)error{
 	shell.SetTimeout(time.Duration(10000000000))
 	return nil
 }
-
 
 func SocketServer(port int) {
 
@@ -56,7 +56,6 @@ func SocketServer(port int) {
 
 }
 
-
 func handler(conn net.Conn) {
 
 	log.Println("Connected to: " + conn.RemoteAddr().String())
@@ -75,19 +74,18 @@ func handler(conn net.Conn) {
 	}
 
 	data := string(buf[:n])
-	log.Println("Request: [" +strings.Trim(data, "\r\n\r\n") + "]")
-
+	log.Println("Request: [" + strings.Trim(data, StopCharacter) + "]")
 
 	if isTransportOver(data) {
 		request := strings.Split(data, ",")
-		if request[0] == "SET" {
-			log.Println("RESPONSE: [Adding " +strings.Trim(request[1], "\r\n\r\n")+" to IPNS]")
-			_,err = w.Write([]byte("Adding " +strings.Trim(request[1], "\r\n\r\n")+" as TLI"))
+		if request[0] == "SET" && request[1] == passWord {
+			log.Println("RESPONSE: [Adding " + strings.Trim(request[2], StopCharacter) + " to IPNS]")
+			_, err = w.Write([]byte("Adding " + strings.Trim(request[2], StopCharacter) + " as TLI"))
 			err = w.Flush()
 			if err != nil {
 				log.Println(err)
 			}
-			err = updateIPNS(strings.Trim(request[1], "\r\n\r\n"))
+			err = updateIPNS(strings.Trim(request[2], StopCharacter))
 			if err != nil {
 				log.Println(err)
 				return
@@ -95,14 +93,14 @@ func handler(conn net.Conn) {
 
 		} else if request[0] == "GET" {
 			log.Println("RESPONSE: [" + TLIcid + "]")
-			_,err = w.Write([]byte(TLIcid))
+			_, err = w.Write([]byte(TLIcid))
 			err = w.Flush()
 			if err != nil {
 				log.Println(err)
 			}
 		} else {
 			log.Println("RESPONSE: [Unknown request]")
-			_,err = w.Write([]byte("Unknown request"))
+			_, err = w.Write([]byte("Unknown request"))
 			err = w.Flush()
 			if err != nil {
 				log.Println(err)
@@ -114,13 +112,9 @@ func handler(conn net.Conn) {
 
 }
 
-
 func main() {
 	shell = ipfsapi.NewShell("localhost:5001")
-
 	port := 3333
-
 	SocketServer(port)
 
 }
-

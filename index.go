@@ -23,8 +23,6 @@ const (
 	StopCharacter = "\r\n\r\n"
 )
 
-//todo: standardise error handling and defer close files
-
 //update the ipns record through the TLI server
 func serverTLIUpdate(newcid string) error {
 

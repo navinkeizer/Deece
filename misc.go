@@ -20,6 +20,7 @@ var (
 	TLI        string
 	serverPort int
 	serverIP   string
+	passWord   string
 )
 
 //function to convert to base32 encoding

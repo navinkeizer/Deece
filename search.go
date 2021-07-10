@@ -25,16 +25,20 @@ func perTermServer1(terms []string, locations []string) ([]QueryResult, error) {
 		cat, err := Shell.Cat(locations[i])
 		if err != nil {
 			log.Println(err)
+			continue
 		}
 
 		csvr := csv.NewReader(cat)
 		records, err := csvr.ReadAll()
 		if err != nil {
-
+			log.Println(err)
+			continue
 		}
 
 		err = cat.Close()
 		if err != nil {
+			log.Println(err)
+			continue
 		}
 
 		for j := 0; j < len(records); j++ {
@@ -115,7 +119,6 @@ func resultsWordServer1(searchterms []string, indexlocation []string) ([]QueryRe
 			if err != nil {
 				return nil, err
 			}
-
 			comres = append(comres, singres...)
 
 			return comres, nil
