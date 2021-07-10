@@ -557,3 +557,6 @@ func CreateIndexEntryClient1(data []string, cid string) error {
 	}
 	return nil
 }
+
+//todo: add automatic pinning after update on server. Both the server local update and the remote update
+//todo: add a mechanism to keep connections alive

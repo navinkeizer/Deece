@@ -2,6 +2,7 @@ package Deece
 
 import (
 	"encoding/csv"
+	"fmt"
 	"github.com/ethereum/go-ethereum/ethclient"
 	ipfsapi "github.com/ipfs/go-ipfs-api"
 	"io/ioutil"
@@ -16,7 +17,7 @@ import (
 //to be used at gateway server running the web interface
 func ConnectServer(Infura string, tli string) (*ipfsapi.Shell, *ethclient.Client) {
 	sh := ipfsapi.NewShell("localhost:5001")
-	sh.SetTimeout(time.Duration(10000000000))
+	sh.SetTimeout(time.Duration(50000000000))
 	cli, err := ethclient.Dial(Infura)
 	if err != nil {
 		log.Println(err)
@@ -29,7 +30,7 @@ func ConnectServer(Infura string, tli string) (*ipfsapi.Shell, *ethclient.Client
 //to be used by clients using the CLI application
 func ConnectClient(Infura string, tli string, ip string, port int) (*ipfsapi.Shell, *ethclient.Client) {
 	sh := ipfsapi.NewShell("localhost:5001")
-	sh.SetTimeout(time.Duration(10000000000))
+	sh.SetTimeout(time.Duration(50000000000))
 	cli, err := ethclient.Dial(Infura)
 	if err != nil {
 		log.Println(err)
@@ -123,7 +124,6 @@ func DoCrawlClient(name string, t string) error {
 	return nil
 }
 
-//TODO: fix problem running slow
 //TODO for client will need function in CLI
 
 func DoSearch1(query string) ([]QueryResult, error) {
@@ -197,4 +197,85 @@ func DoSearch1(query string) ([]QueryResult, error) {
 	}
 
 	return qResult, nil
+}
+
+func DoSearchClient(searchTerms []string) error {
+
+	//get the latest TLI file
+	latestTLI, err := Shell.Resolve(TLI)
+	if err != nil {
+		log.Println(err)
+		return err
+	}
+
+	cidTLI := strings.Split(latestTLI, "s/")[1]
+
+	//retrieve the TLI file
+	cat, err := Shell.Cat(cidTLI)
+	if err != nil {
+		log.Println(err)
+		return err
+	}
+
+	result, err := ioutil.ReadAll(cat)
+	if err != nil {
+		log.Println(err)
+		return err
+	}
+
+	err = cat.Close()
+	if err != nil {
+		log.Println(err)
+		return err
+	}
+
+	err = ioutil.WriteFile("./TLI/TLI.csv", result, 0644)
+	if err != nil {
+		log.Println(err)
+		return err
+	}
+
+	f, err := os.Open("./TLI/TLI.csv")
+	if err != nil {
+		log.Println(err)
+		return err
+	}
+
+	csvr := csv.NewReader(f)
+	records, _ := csvr.ReadAll()
+
+	//retrieve the index location for each keyword
+	var indexLocations []string
+
+	for j := 0; j < len(searchTerms); j++ {
+		i := sort.Search(len(records), func(i int) bool { return searchTerms[j] <= records[i][0] })
+		if i < len(records) && records[i][0] == searchTerms[j] {
+			indexLocations = append(indexLocations, records[i][1])
+		} else {
+			indexLocations = append(indexLocations, "-")
+		}
+	}
+	err = f.Close()
+	if err != nil {
+		log.Println(err)
+		return err
+	}
+
+	qResult, err := resultsWordServer1(searchTerms, indexLocations)
+	if err != nil {
+		log.Println(err)
+		return err
+	}
+
+	//print out the results of the searchterms
+	printKeyword := " "
+	for k := 0; k < len(qResult); k++ {
+		if printKeyword != qResult[k].SearchTerm {
+			fmt.Println()
+			fmt.Println(qResult[k].SearchTerm + " : ")
+		}
+		fmt.Println(qResult[k].CID + " (https://gateway.ipfs.io/ipfs/" + qResult[k].CID)
+	}
+
+	return nil
 }
