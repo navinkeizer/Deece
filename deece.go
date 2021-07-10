@@ -2,11 +2,13 @@ package Deece
 
 import (
 	"encoding/csv"
+	"fmt"
 	"github.com/ethereum/go-ethereum/ethclient"
 	ipfsapi "github.com/ipfs/go-ipfs-api"
 	"io/ioutil"
 	"log"
 	"os"
+	"sort"
 	"strings"
 )
 
@@ -61,11 +63,14 @@ func DoCrawlServer(name string, t string) {
 	log.Println("Success saving file locally...")
 
 	//starts adding to the index by extracting keywords using OCR
-	content, err := extractPdfDataOCR("./retrieved_files/" + id)
+	content, err := ExtractPdfDataOCR("./retrieved_files/" + id)
 	if err != nil {
 		log.Fatal(&pdfreadfail{"./retrieved_files/" + id + ".pdf"})
 	}
-	createIndexEntryServer(content, id)
+
+	log.Println("Success extracting keywords...")
+
+	CreateIndexEntryServer1(content, id)
 
 	log.Println("Successful indexing.")
 }
@@ -89,25 +94,139 @@ func DoCrawlClient(name string, t string) {
 	log.Println("Success saving file locally...")
 
 	//starts adding to the index by extracting keywords using OCR
-	content, err := extractPdfDataOCR("./retrieved_files/" + id)
+	content, err := ExtractPdfDataOCR("./retrieved_files/" + id)
 	if err != nil {
 		log.Fatal(&pdfreadfail{"./retrieved_files/" + id + ".pdf"})
 	}
 
-	createIndexEntryClient(content, id)
+	log.Println("Success extracting keywords...")
+
+	CreateIndexEntryClient1(content, id)
 
 	log.Println("Successful indexing.")
 }
 
-//starts the search process for an array of search terms
-//to be run on CLI
-func DoSearchClient(searchTerms []string) {
+////starts the search process for an array of search terms
+////to be run on CLI
+//func DoSearchClient(searchTerms []string) {
+//	//get the latest TLI file
+//	latestTLI, err := Shell.Resolve(TLI)
+//	if err != nil {
+//		log.Println(err)
+//	}
+//	cidTLI := strings.Split(latestTLI, "s/")[1]
+//	//retrieve the TLI file
+//	cat, err := Shell.Cat(cidTLI)
+//	if err != nil {
+//		log.Println(err)
+//	}
+//
+//	result, err := ioutil.ReadAll(cat)
+//	if err != nil {
+//	}
+//
+//	err = cat.Close()
+//	if err != nil {
+//	}
+//
+//	err = ioutil.WriteFile("./TLI/TLI.csv", result, 0644)
+//	if err != nil {
+//	}
+//
+//	f, err := os.Open("./TLI/TLI.csv")
+//	if err != nil {
+//	}
+//
+//	csvr := csv.NewReader(f)
+//	records, _ := csvr.ReadAll()
+//
+//	//retrieve the index location for each keyword
+//	var indexLocations []string
+//
+//	// TODO:need to change to better performance search mechanism
+//	for i := 0; i < len(searchTerms); i++ {
+//		indexLocations = append(indexLocations, fetchIndex(searchTerms[i], records))
+//	}
+//
+//	err = f.Close()
+//	if err != nil {
+//
+//	}
+//	//print the search results to the terminal
+//	err = printResultsWordClient(searchTerms, indexLocations)
+//	if err != nil {
+//
+//	}
+//}
+//
+////starts the search process for an array of search terms
+////to be run on gateway server
+//func DoSearchServer(searchTerms []string) ([]string, [][]resultKeyword, error) {
+//
+//	//get the latest TLI file
+//	latestTLI, err := Shell.Resolve(TLI)
+//	if err != nil {
+//		log.Println(err)
+//	}
+//	cidTLI := strings.Split(latestTLI, "s/")[1]
+//	//retrieve the TLI file
+//	cat, err := Shell.Cat(cidTLI)
+//	if err != nil {
+//		log.Println(err)
+//	}
+//
+//	result, err := ioutil.ReadAll(cat)
+//	if err != nil {
+//	}
+//
+//	err = cat.Close()
+//	if err != nil {
+//	}
+//
+//	err = ioutil.WriteFile("./TLI/TLI.csv", result, 0644)
+//	if err != nil {
+//	}
+//
+//	f, err := os.Open("./TLI/TLI.csv")
+//	if err != nil {
+//	}
+//
+//	csvr := csv.NewReader(f)
+//	records, _ := csvr.ReadAll()
+//
+//	//retrieve the index location for each keyword
+//	var indexLocations []string
+//	// need to change to better performance search mechanism
+//	for i := 0; i < len(searchTerms); i++ {
+//		indexLocations = append(indexLocations, fetchIndex(searchTerms[i], records))
+//	}
+//
+//	err = f.Close()
+//	if err != nil {
+//
+//	}
+//
+//	//return the results in structure to be used by web interface
+//	ST, SR, err := printResultsWordServer(searchTerms, indexLocations)
+//	if err != nil {
+//
+//	}
+//	return ST, SR, nil
+//}
+//
+
+func DoSearch1(query string) ([]QueryResult, error) {
+
+	searchTerms := strings.Split(query, " ")
+
 	//get the latest TLI file
 	latestTLI, err := Shell.Resolve(TLI)
 	if err != nil {
 		log.Println(err)
 	}
+
 	cidTLI := strings.Split(latestTLI, "s/")[1]
+
 	//retrieve the TLI file
 	cat, err := Shell.Cat(cidTLI)
 	if err != nil {
@@ -136,73 +255,26 @@ func DoSearchClient(searchTerms []string) {
 	//retrieve the index location for each keyword
 	var indexLocations []string
 
-	// TODO:need to change to better performance search mechanism
-	for i := 0; i < len(searchTerms); i++ {
-		indexLocations = append(indexLocations, fetchIndex(searchTerms[i], records))
-	}
+	for j := 0; j < len(searchTerms); j++ {
+		i := sort.Search(len(records), func(i int) bool { return searchTerms[j] <= records[i][0] })
+		if i < len(records) && records[i][0] == searchTerms[j] {
+			indexLocations = append(indexLocations, records[i][1])
+		} else {
+			indexLocations = append(indexLocations, "-")
+		}
 
+	}
 	err = f.Close()
-	if err != nil {
-
-	}
-	//print the search results to the terminal
-	err = printResultsWordClient(searchTerms, indexLocations)
-	if err != nil {
-
-	}
-}
-
-//starts the search process for an array of search terms
-//to be run on gateway server
-func DoSearchServer(searchTerms []string) ([]string, [][]resultKeyword, error) {
-
-	//get the latest TLI file
-	latestTLI, err := Shell.Resolve(TLI)
-	if err != nil {
-		log.Println(err)
-	}
-	cidTLI := strings.Split(latestTLI, "s/")[1]
-	//retrieve the TLI file
-	cat, err := Shell.Cat(cidTLI)
 	if err != nil {
 		log.Println(err)
 	}
 
-	result, err := ioutil.ReadAll(cat)
-	if err != nil {
-	}
-
-	err = cat.Close()
-	if err != nil {
-	}
-
-	err = ioutil.WriteFile("./TLI/TLI.csv", result, 0644)
-	if err != nil {
-	}
-
-	f, err := os.Open("./TLI/TLI.csv")
-	if err != nil {
-	}
-
-	csvr := csv.NewReader(f)
-	records, _ := csvr.ReadAll()
-
-	//retrieve the index location for each keyword
-	var indexLocations []string
-	// need to change to better performance search mechanism
-	for i := 0; i < len(searchTerms); i++ {
-		indexLocations = append(indexLocations, fetchIndex(searchTerms[i], records))
-	}
-
-	err = f.Close()
+	qResult, err := resultsWordServer1(searchTerms, indexLocations)
 	if err != nil {
 
 	}
 
-	//return the results in structure to be used by web interface
-	ST, SR, err := printResultsWordServer(searchTerms, indexLocations)
-	if err != nil {
+	fmt.Println(qResult)
 
-	}
-	return ST, SR, nil
+	return qResult, nil
 }

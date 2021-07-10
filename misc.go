@@ -8,6 +8,9 @@ import (
 	"github.com/multiformats/go-multibase"
 	"github.com/pkg/errors"
 	"github.com/wealdtech/go-multicodec"
+	"net"
+	"strconv"
+	"strings"
 )
 
 //defining the global variables used
@@ -83,4 +86,26 @@ func isValidPdf(stream []byte) bool {
 	}
 
 	return false
+}
+
+//function to get the latest ipns record from the server for the TLI
+func getTLI() (string, error) {
+	addr := strings.Join([]string{serverIP, strconv.Itoa(serverPort)}, ":")
+	conn, err := net.Dial("tcp", addr)
+	if err != nil {
+		return "", err
+	}
+	defer conn.Close()
+
+	_, err = conn.Write([]byte(getMessage))
+	_, err = conn.Write([]byte(StopCharacter))
+	if err != nil {
+		return "", err
+	}
+	buff := make([]byte, 1024)
+	n, _ := conn.Read(buff)
+	data := string(buff[:n])
+	tli := strings.Trim(data, "\r\n\r\n")
+	//log.Printf("Update TLI: %s",tli)
+	return tli, nil
 }
