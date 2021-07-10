@@ -247,9 +247,9 @@ import (
 //
 
 type QueryResult struct {
-	searchTerm string
-	CID        string
-	metadata   string
+	SearchTerm string `json:"searchTerm"`
+	CID        string `json:"CID"`
+	Metadata   string `json:"metadata"`
 }
 
 func perTermServer1(terms []string, locations []string) ([]QueryResult, error) {
@@ -277,9 +277,9 @@ func perTermServer1(terms []string, locations []string) ([]QueryResult, error) {
 
 		for j := 0; j < len(records); j++ {
 			r := QueryResult{
-				searchTerm: terms[i],
+				SearchTerm: terms[i],
 				CID:        records[j][0],
-				metadata:   records[j][1],
+				Metadata:   records[j][1],
 			}
 
 			searchResult = append(searchResult, r)
@@ -313,9 +313,9 @@ func twoTerm(terms []string, locations []string) ([]QueryResult, error) {
 			i := sort.Search(len(records2), func(i int) bool { return records1[z][0] <= records2[i][0] })
 			if i < len(records2) && records2[i][0] == records1[z][0] {
 				r := QueryResult{
-					searchTerm: terms[0] + " " + terms[1],
+					SearchTerm: terms[0] + " " + terms[1],
 					CID:        records2[i][0],
-					metadata:   records2[i][1],
+					Metadata:   records2[i][1],
 				}
 				combinedsearchResult = append(combinedsearchResult, r)
 			}
@@ -327,9 +327,9 @@ func twoTerm(terms []string, locations []string) ([]QueryResult, error) {
 			i := sort.Search(len(records1), func(i int) bool { return records2[z][0] <= records1[i][0] })
 			if i < len(records1) && records1[i][0] == records2[z][0] {
 				r := QueryResult{
-					searchTerm: terms[0] + " " + terms[1],
+					SearchTerm: terms[0] + " " + terms[1],
 					CID:        records1[i][0],
-					metadata:   records1[i][1],
+					Metadata:   records1[i][1],
 				}
 				combinedsearchResult = append(combinedsearchResult, r)
 			}
