@@ -14,6 +14,7 @@ type noipns struct{ ipns string }
 type pdfreadfail struct{ name string }
 type existCheckFail struct{ name string }
 type IncorrrectInput struct{}
+type noIndexAdd struct{}
 
 func (k *noNSType) Error() string {
 	return "Addressing convention not supported"
@@ -44,4 +45,8 @@ func (xx *existCheckFail) Error() string {
 }
 func (zz *IncorrrectInput) Error() string {
 	return "Input type is not recognised."
+}
+
+func (zz *noIndexAdd) Error() string {
+	return "Not able to add to the index."
 }
