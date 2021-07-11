@@ -38,7 +38,7 @@ Deece allows for decentralised search on IPFS data. This is achieved by letting 
 
 Deece allows for two specifc actions: search and crawl. `search` and `crawl`. Search queries the latest TLI to find the KSI for each keyword in the user query, and then fetches the results from these, which is displayed to the user. Currently ranking of results is ordered based on CID, but more sophisticated mechanisms should be developed. We allow for combined results for up to two keywords, which will be extended in the future. 
 
-There are currently three ways to access Deece. First, there is the client software which uses a command line interface. Second, we have implemented a gateway service(http://www.deece.nl), which runs an instance of our client node and allows "light clients" to interact with the search without installing other software. Finally, we have released our code used by the CLI and gateway in the form of a GO library.  
+There are currently three ways to access Deece. First, there is the client software which uses a command line interface. Second, we have implemented a gateway service(http://www.deece.nl), which runs an instance of our client node and allows "light clients" to interact with the search without installing other software. Finally, we have released our code used by the CLI and gateway in the form of a Go library.  
 
 *The initial version of Deece relies on a trusted node (the same node as our gateway) to update the IPNS record pointing to the latest version of the TLI. When clients crawl, the final step involves them sending an update request to this server. At the moment, clients will need to specify a password in their config file, which can be obtained from the maintainers, as security measures will be implemented later.*
 
@@ -64,14 +64,28 @@ However, none of the above projects captures our specific use case of decentrali
 
 ## Architecture Design
 
+Our architecure relies on a number of client nodes, which collectively maintain and add to the index, and are able to perform searches. We have taken the approach of finishing a working protype of our architecture first, and adding features incrementally. Therefore, our current version relies on a trusted node (gateway) to update the TLI IPNS record. As there is no added security or incentivisation implemented, we have used a simple password to allow new client nodes to add to the index. 
 
+In the future we envision there to be added security and incentives in place, which allign nodes to be honest when updating the index. These may be in the form of cryptocurreny rewards, slashing, reputation, etc. One way to fund rewards to honest nodes could be by incorporating advertisement into the protocol and allow advertisement fees to be delegated to the nodes maintining the network. 
+
+Our current version only supports PDF files on IPFS to be added to the index. In the future, we would like to expand this to more file types and directories, and support different decentralised storage networks. Finally, we aim to incorporate blockchain based data such as smart contracts into search. 
+
+We now present an overview of the two main operations in our mechanism.
 
 
 
 ### Search
 
-### Crawl
+-ranking
 
+
+
+
+### Crawl
+-curation
+-crawl
+-index
+-add to tli
 
 
 
@@ -79,22 +93,36 @@ However, none of the above projects captures our specific use case of decentrali
 
 ## Components
 
+There are a number of ways to access Deece, which we descibe below. 
+
 ### `Client`
+
+The client software can be used by any node running IPFS, and provides a simple command line interface. 
+
+[comment]: <> (add CLI functionality)
+
 
 ### `Gateway`
 
+For easy and lightweight access we have implemented a gateway for our search clients. This can be found at: http://www.deece.nl, and allows for search and crawls on the network based on identifiers (CID's).
+
+[comment]: <> (add gateway image)
+
+
+
 ### `Library`
 
-
+Both the CLI and gateway run using our Deece package for Go. We have released this, as this can be used for easy integrations and extensions. 
 
 
 
 ## Install
 
+
 ### `Client`
 
-### `Library`
 
+### `Library`
 
 
 
