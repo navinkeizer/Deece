@@ -76,10 +76,11 @@ We now present an overview of the two main operations in our mechanism.
 
 ### Search
 
--ranking
+Search starts with a query by the client containing a number of search terms. The client then fetches the latest TLI by resolving the IPNS name set by the gateway to the corresponding CID. This TLI is then fetched and traversed to check if the keywords have KSI's. If this is the case, the relevant KSI's are queries, to return the content that contains the keywords. The client can then retrieve these files from the network. 
 
 <img src="./images/search.jpg" width="550" >
 
+One important aspect in search engines is the ranking mechanism. This generally happens in a centralised manner, without much influence from the clients. While we have not implemented sophisticated ranking mechanisms, we envision there to be ranking at the clients of the results, which gives them greater power and transparency. This allows clients to be in control of ranking functions and to personalise these based on specific needs. At present, our mechanism returns ordered results based on CID's. When two search terms are entrered, the pages where these both occur are returned first, after which the pages are returned which contain only one of the terms. 
 
 
 ### Crawl
