@@ -99,6 +99,32 @@ There are a number of ways to access Deece:
 
 The client software can be used by any node running IPFS, and provides a simple command line interface. 
 
+```shell
+
+NAME:
+   Deece - Decentralised search for IPFS
+
+USAGE:
+   Deece [global options] command [command options] [arguments...]
+
+VERSION:
+   0.0.1
+
+AUTHORS:
+   Navin V. Keizer <navin.keizer.15@ucl.ac.uk>
+   Puneet K. Bindlish <p.k.bindlish@vu.nl>
+
+COMMANDS:
+   search   Performs a decentralised search on IPFS
+   crawl    Crawls a page to add to the decentralised index
+   help, h  Shows a list of commands or help for one command
+
+GLOBAL OPTIONS:
+   --help, -h     show help (default: false)
+   --version, -v  print the version (default: false)
+
+```
+
 [comment]: <> (add CLI functionality)
 
 
