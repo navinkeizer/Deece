@@ -30,7 +30,18 @@ Deece is a, open, collaborative, and decentralised search mechanism for IPFS. An
 
 ## Overview
 
+
+
+
+
 ### Motivation
+
+Currenly, Web users have few alternatives to *centralised* search engines. These engines maintain centralised control, policy and trust, which may lead to issues in censorship, privacy protection, and transparency. 
+
+Furthermore, these engines generally focus their efforts on traditional Web content (hosted at Web servers, accessed through the DNS). However, in a Web3 paradigm, where content is expected to be stored at decentralised storage networks (s.a. IPFS) and name resolution to take place through blockchain solutions (s.a. ENS), an alternative search engine is required. 
+
+In short, a search mechanism is needed which searches decentralised data, and does so in a decentralised manner. 
+
 
 ### State-of-the-Art
 
