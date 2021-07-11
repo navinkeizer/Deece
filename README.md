@@ -33,7 +33,7 @@ Deece is a, open, collaborative, and decentralised search mechanism for IPFS. An
 Deece allows for decentralised search on IPFS data. This is achieved by letting a network of IPFS nodes participate in crawling and indexing of the data on the network. The index is stored on IPFS, and split up into a two layer hierachy, the first being the *Top Level Index* (TLI) and the second being the *Keyword Specific Indexes* (KSI). The TLI contains the identifiers (CID) for the KSI for each keyword, and is constantly updated when a node submits a crawl. When crawling, the nodes add to the current KSI a list of the identifiers of files that contain that keyword. 
 
 
-[comment]: <> (add TLI/KSI image)
+<img src="./images/indexes.jpg" width="550" >
 
 
 Deece allows for two specifc actions: search and crawl. `search` and `crawl`. Search queries the latest TLI to find the KSI for each keyword in the user query, and then fetches the results from these, which is displayed to the user. Currently ranking of results is ordered based on CID, but more sophisticated mechanisms should be developed. We allow for combined results for up to two keywords, which will be extended in the future. 
@@ -78,6 +78,7 @@ We now present an overview of the two main operations in our mechanism.
 
 -ranking
 
+<img src="./images/search.jpg" width="550" >
 
 
 
@@ -87,6 +88,7 @@ We now present an overview of the two main operations in our mechanism.
 -index
 -add to tli
 
+<img src="./images/crawl.jpg" width="550" >
 
 
 
@@ -124,8 +126,6 @@ GLOBAL OPTIONS:
    --version, -v  print the version (default: false)
 
 ```
-
-[comment]: <> (add CLI functionality)
 
 
 ### `Gateway`
