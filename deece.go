@@ -17,7 +17,7 @@ import (
 //to be used at gateway server running the web interface
 func ConnectServer(Infura string, tli string) (*ipfsapi.Shell, *ethclient.Client) {
 	sh := ipfsapi.NewShell("localhost:5001")
-	sh.SetTimeout(time.Duration(50000000000))
+	sh.SetTimeout(time.Duration(100000000000))
 	cli, err := ethclient.Dial(Infura)
 	if err != nil {
 		log.Println(err)
@@ -30,7 +30,7 @@ func ConnectServer(Infura string, tli string) (*ipfsapi.Shell, *ethclient.Client
 //to be used by clients using the CLI application
 func ConnectClient(Infura string, tli string, ip string, port int, passW string) (*ipfsapi.Shell, *ethclient.Client) {
 	sh := ipfsapi.NewShell("localhost:5001")
-	sh.SetTimeout(time.Duration(50000000000))
+	//sh.SetTimeout(time.Duration(50000000000))
 	cli, err := ethclient.Dial(Infura)
 	if err != nil {
 		log.Println(err)
@@ -266,6 +266,8 @@ func DoSearchClient(searchTerms []string) error {
 		return err
 	}
 
+	fmt.Println("Found", len(qResult), "results: ")
+
 	//print out the results of the searchterms
 	printKeyword := " "
 	for k := 0; k < len(qResult); k++ {
@@ -273,10 +275,10 @@ func DoSearchClient(searchTerms []string) error {
 			fmt.Println()
 			fmt.Println(qResult[k].SearchTerm + " : ")
 		}
-		fmt.Println(qResult[k].CID + " (https://gateway.ipfs.io/ipfs/" + qResult[k].CID)
+		fmt.Println(qResult[k].CID + " (https://gateway.ipfs.io/ipfs/" + qResult[k].CID + ")")
 	}
 
 	return nil
 }
 
-//todo:add some extra metadate (timestamp, file type, size?...)
+//todo:add some extra metadata (timestamp, file type, size?...)

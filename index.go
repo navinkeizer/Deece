@@ -15,7 +15,6 @@ import (
 	"sort"
 	"strconv"
 	"strings"
-	"time"
 )
 
 const (
@@ -353,13 +352,13 @@ func CreateIndexEntryServer1(data []string, cid string) error {
 			log.Println(err)
 		}
 
-		Shell.SetTimeout(time.Duration(1000000000000))
+		//Shell.SetTimeout(time.Duration(1000000000000))
 		err = Shell.Publish("", "/ipfs/"+contentid)
 		if err != nil {
 			log.Println(err)
 			return err
 		}
-		Shell.SetTimeout(time.Duration(10000000000))
+		//Shell.SetTimeout(time.Duration(10000000000))
 
 	}
 	return nil

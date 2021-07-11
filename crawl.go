@@ -10,7 +10,7 @@ import (
 )
 
 //function to retrieve a file using ens name
-//uses the gateway provider specified in a config.json file
+//uses the gateway provider specified in a config1.json file
 func getFromEns(ENSdomain string) ([]byte, string, error) {
 	resol, err := ens.NewResolver(Client, ENSdomain)
 	if err != nil {

@@ -2,6 +2,7 @@ package main
 
 import (
 	"Deece"
+	"context"
 	"encoding/json"
 	"fmt"
 	"github.com/urfave/cli"
@@ -15,6 +16,7 @@ type Configuration struct {
 	EthGateway string
 	TLI        string
 	passW      string
+	serverAddr string
 }
 
 var (
@@ -23,12 +25,13 @@ var (
 )
 
 func setConfig() error {
-	file, err := os.Open("./config.json")
+	file, err := os.Open("./config1.json")
 	if err != nil {
 		return err
 	}
 	decoder := json.NewDecoder(file)
 	err = decoder.Decode(&configuration)
+	fmt.Println(configuration)
 	if err != nil {
 		return err
 	}
@@ -58,6 +61,7 @@ func commands() {
 				if c.Args().Len() < 1 {
 					return &Deece.IncorrrectInput{}
 				}
+				fmt.Println("searching...")
 				err := Deece.DoSearchClient(c.Args().Slice())
 				if err != nil {
 					return err
@@ -130,7 +134,10 @@ func main() {
 	info()
 	commands()
 
-	err = app1.Run(os.Args)
+	fmt.Println(configuration)
+	err = Deece.Shell.SwarmConnect(context.Background(), configuration.serverAddr)
+
+	//err = app1.Run(os.Args)
 	if err != nil {
 		log.Fatal(err)
 	}
