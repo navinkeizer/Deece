@@ -57,7 +57,10 @@ func commands() {
 				if c.Args().Len() < 1 {
 					return &Deece.IncorrrectInput{}
 				}
-				Deece.DoSearchClient(c.Args().Slice())
+				err := Deece.DoSearchClient(c.Args().Slice())
+				if err != nil {
+					return err
+				}
 				return nil
 			},
 		},
@@ -125,4 +128,10 @@ func main() {
 		configuration.TLI, configuration.ServerIP, configuration.ServerPort)
 	info()
 	commands()
+
+	//err = app.Run(os.Args)
+	//if err != nil {
+	//	log.Fatal(err)
+	//}
+
 }

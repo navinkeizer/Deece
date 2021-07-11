@@ -124,8 +124,6 @@ func DoCrawlClient(name string, t string) error {
 	return nil
 }
 
-//TODO for client will need function in CLI
-
 func DoSearch1(query string) ([]QueryResult, error) {
 
 	searchTerms := strings.Split(query, " ")
@@ -279,3 +277,5 @@ func DoSearchClient(searchTerms []string) error {
 
 	return nil
 }
+
+//todo:add some extra metadate (timestamp, file type, size?...)
