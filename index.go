@@ -3,7 +3,6 @@ package Deece
 import (
 	"bytes"
 	"encoding/csv"
-	"fmt"
 	"github.com/bbalet/stopwords"
 	"github.com/gen2brain/go-fitz"
 	"github.com/otiai10/gosseract"
@@ -15,6 +14,7 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+	"time"
 )
 
 const (
@@ -55,7 +55,7 @@ func serverTLIUpdate(newcid string) error {
 
 //set message for server TLI update
 func setMessage(cid string) string {
-	return "SET," + cid
+	return "SET," + passWord + "," + cid
 }
 
 //function for extracting keywords from pdf with tesseract OCR
@@ -242,8 +242,9 @@ func CreateIndexEntryServer1(data []string, cid string) error {
 			i := sort.Search(len(records), func(i int) bool { return cid <= records[i][0] })
 			if i < len(records) && records[i][0] == cid {
 			} else {
+
 				var entry = []string{
-					cid, "false",
+					cid, "pdf;" + time.Now().Format("2006-01-02 15:04"),
 				}
 				records = append(records, []string{""})
 				copy(records[i+1:], records[i:])
@@ -280,7 +281,7 @@ func CreateIndexEntryServer1(data []string, cid string) error {
 					log.Println(err)
 					continue
 				}
-				fmt.Println("changes TLI")
+				//fmt.Println("changes TLI")
 				TopLevelIndex[TLIposition][1] = id
 				change = true
 			}
@@ -293,7 +294,7 @@ func CreateIndexEntryServer1(data []string, cid string) error {
 			}
 
 			var entry = [][]string{
-				{cid, "false"},
+				{cid, "pdf;" + time.Now().Format("2006-01-02 15:04")},
 			}
 
 			writer := csv.NewWriter(f)
@@ -325,7 +326,7 @@ func CreateIndexEntryServer1(data []string, cid string) error {
 			TopLevelIndex = append(TopLevelIndex, []string{""})
 			copy(TopLevelIndex[TLIposition+1:], TopLevelIndex[TLIposition:])
 			TopLevelIndex[TLIposition] = e
-			fmt.Println("changes TLI")
+			//fmt.Println("changes TLI")
 			change = true
 		}
 
@@ -437,7 +438,7 @@ func CreateIndexEntryClient1(data []string, cid string) error {
 			if i < len(records) && records[i][0] == cid {
 			} else {
 				var entry = []string{
-					cid, "false",
+					cid, "pdf;" + time.Now().Format("2006-01-02 15:04"),
 				}
 				records = append(records, []string{""})
 				copy(records[i+1:], records[i:])
@@ -488,7 +489,7 @@ func CreateIndexEntryClient1(data []string, cid string) error {
 			}
 
 			var entry = [][]string{
-				{cid, "false"},
+				{cid, "pdf;" + time.Now().Format("2006-01-02 15:04")},
 			}
 
 			writer := csv.NewWriter(f)
@@ -556,6 +557,3 @@ func CreateIndexEntryClient1(data []string, cid string) error {
 	}
 	return nil
 }
-
-//todo: add automatic pinning after update on server. Both the server local update and the remote update
-//todo: add a mechanism to keep connections alive

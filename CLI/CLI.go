@@ -15,8 +15,8 @@ type Configuration struct {
 	ServerPort int
 	EthGateway string
 	TLI        string
-	passW      string
-	serverAddr string
+	PassW      string
+	ServerAddr string
 }
 
 var (
@@ -31,7 +31,6 @@ func setConfig() error {
 	}
 	decoder := json.NewDecoder(file)
 	err = decoder.Decode(&configuration)
-	fmt.Println(configuration)
 	if err != nil {
 		return err
 	}
@@ -61,8 +60,13 @@ func commands() {
 				if c.Args().Len() < 1 {
 					return &Deece.IncorrrectInput{}
 				}
+				//ensure swarm is connected to gateway peer
+				err := Deece.Shell.SwarmConnect(context.Background(), configuration.ServerAddr)
+				if err != nil {
+					log.Println(err)
+				}
 				fmt.Println("searching...")
-				err := Deece.DoSearchClient(c.Args().Slice())
+				err = Deece.DoSearchClient(c.Args().Slice())
 				if err != nil {
 					return err
 				}
@@ -85,6 +89,11 @@ func commands() {
 
 			Before: func(c *cli.Context) error {
 				fmt.Println("Start crawl...")
+				//ensure swarm is connected to gateway peer
+				err := Deece.Shell.SwarmConnect(context.Background(), configuration.ServerAddr)
+				if err != nil {
+					log.Println(err)
+				}
 				return nil
 			},
 
@@ -130,14 +139,11 @@ func main() {
 		log.Fatal(err)
 	}
 	Deece.Shell, Deece.Client = Deece.ConnectClient(configuration.EthGateway,
-		configuration.TLI, configuration.ServerIP, configuration.ServerPort, configuration.passW)
+		configuration.TLI, configuration.ServerIP, configuration.ServerPort, configuration.PassW)
 	info()
 	commands()
 
-	fmt.Println(configuration)
-	err = Deece.Shell.SwarmConnect(context.Background(), configuration.serverAddr)
-
-	//err = app1.Run(os.Args)
+	err = app1.Run(os.Args)
 	if err != nil {
 		log.Fatal(err)
 	}

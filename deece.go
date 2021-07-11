@@ -280,5 +280,3 @@ func DoSearchClient(searchTerms []string) error {
 
 	return nil
 }
-
-//todo:add some extra metadata (timestamp, file type, size?...)
