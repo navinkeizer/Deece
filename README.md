@@ -93,7 +93,7 @@ We now present an overview of the two main operations in our mechanism.
 
 ## Components
 
-There are a number of ways to access Deece, which we descibe below. 
+There are a number of ways to access Deece: 
 
 ### `Client`
 
