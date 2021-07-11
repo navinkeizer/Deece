@@ -150,7 +150,7 @@ Both the CLI and gateway run using our Deece package for Go. We have released th
 
 - requirements (run daemon and constant connection to server for speed)
 - password if intending to crawl
-- 
+- file structure in folder: TLI, retrieved files, test_index
 
 ### `Client`
 
