@@ -28,7 +28,7 @@ func ConnectServer(Infura string, tli string) (*ipfsapi.Shell, *ethclient.Client
 
 //function to setup the local connections to ipfs, eth gateway, gateway server address etc.
 //to be used by clients using the CLI application
-func ConnectClient(Infura string, tli string, ip string, port int) (*ipfsapi.Shell, *ethclient.Client) {
+func ConnectClient(Infura string, tli string, ip string, port int, passW string) (*ipfsapi.Shell, *ethclient.Client) {
 	sh := ipfsapi.NewShell("localhost:5001")
 	sh.SetTimeout(time.Duration(50000000000))
 	cli, err := ethclient.Dial(Infura)
@@ -37,6 +37,7 @@ func ConnectClient(Infura string, tli string, ip string, port int) (*ipfsapi.She
 	}
 	serverPort = port
 	serverIP = ip
+	passWord = passW
 	TLI, err = getTLI()
 	if err != nil || TLI == "" {
 		log.Println(err)

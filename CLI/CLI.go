@@ -14,6 +14,7 @@ type Configuration struct {
 	ServerPort int
 	EthGateway string
 	TLI        string
+	passW      string
 }
 
 var (
@@ -125,13 +126,13 @@ func main() {
 		log.Fatal(err)
 	}
 	Deece.Shell, Deece.Client = Deece.ConnectClient(configuration.EthGateway,
-		configuration.TLI, configuration.ServerIP, configuration.ServerPort)
+		configuration.TLI, configuration.ServerIP, configuration.ServerPort, configuration.passW)
 	info()
 	commands()
 
-	//err = app.Run(os.Args)
-	//if err != nil {
-	//	log.Fatal(err)
-	//}
+	err = app1.Run(os.Args)
+	if err != nil {
+		log.Fatal(err)
+	}
 
 }
