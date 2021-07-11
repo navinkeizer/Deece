@@ -21,8 +21,8 @@ Deece is a, open, collaborative, and decentralised search mechanism for IPFS. An
   - [`Gateway`](#gateway) 
   - [`Library`](#library)
 - [Install](#install)
-  - [Client](#client)
-  - [Library](#library)  
+  - [`Client`](#client)
+  - [`Library`](#library)  
 - [Maintainers](#maintainers)
 - [License](#license)
 
@@ -52,11 +52,11 @@ Deece is a, open, collaborative, and decentralised search mechanism for IPFS. An
 
 ## Components
 
-### Client
+### `Client`
 
-### Gateway
+### `Gateway`
 
-### Library
+### `Library`
 
 
 
@@ -64,9 +64,9 @@ Deece is a, open, collaborative, and decentralised search mechanism for IPFS. An
 
 ## Install
 
-### Client
+### `Client`
 
-### Library
+### `Library`
 
 
 
