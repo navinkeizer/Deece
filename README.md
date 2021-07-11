@@ -66,6 +66,8 @@ However, none of the above projects captures our specific use case of decentrali
 
 Our architecure relies on a number of client nodes, which collectively maintain and add to the index, and are able to perform searches. We have taken the approach of finishing a working protype of our architecture first, and adding features incrementally. Therefore, our current version relies on a trusted node (gateway) to update the TLI IPNS record. As there is no added security or incentivisation implemented, we have used a simple password to allow new client nodes to add to the index. 
 
+- mention the assumptions: altruistic as we are only a prototype
+
 In the future we envision there to be added security and incentives in place, which allign nodes to be honest when updating the index. These may be in the form of cryptocurreny rewards, slashing, reputation, etc. One way to fund rewards to honest nodes could be by incorporating advertisement into the protocol and allow advertisement fees to be delegated to the nodes maintining the network. 
 
 Our current version only supports PDF files on IPFS to be added to the index. In the future, we would like to expand this to more file types and directories, and support different decentralised storage networks. Finally, we aim to incorporate blockchain based data such as smart contracts into search. 
@@ -84,7 +86,7 @@ One important aspect in search engines is the ranking mechanism. This generally 
 
 
 ### Crawl
--curation
+-curation (currently only manual. envision in future to be automatic when visiting a page or content)
 -crawl
 -index
 -add to tli
@@ -92,6 +94,7 @@ One important aspect in search engines is the ranking mechanism. This generally 
 <img src="./images/crawl.jpg" width="550" >
 
 
+- mention ipns is slow and may become a performance bottleneck. Instead other mechanisms like dnslilnk, or blockchain based naming might be more appropriate. 
 
 
 ## Components
@@ -145,6 +148,9 @@ Both the CLI and gateway run using our Deece package for Go. We have released th
 
 ## Install
 
+- requirements (run daemon and constant connection to server for speed)
+- password if intending to crawl
+- 
 
 ### `Client`
 
