@@ -172,6 +172,10 @@ Both the CLI and gateway run using our Deece package for Go. We have released th
 
 ## Project Status
 
+The current implementation of Deece is still experimental, and therefore may experience instabilities. As described in this document, we have made simplifying assumptions (altruism) and focused on limited functionality (PDF only). Furthermore, the gateway presents a centralised aspect, which in the future should be replaced by decentralised network consensus, and the protocol should be secured by incentives. 
+
+Our implementation takes a first principle approach. We aimed to build from the ground up, rather than relying on existing approaches and solutions for system components. We believe this is necesary as existing solutions may not be optimal for decentralised Web3 content. In other words, there is much work to be done.
+
 
 
 ## Maintainers
