@@ -23,6 +23,7 @@ Deece is a, open, collaborative, and decentralised search mechanism for IPFS. An
 - [Install](#install)
   - [`Client`](#client)
   - [`Library`](#library)  
+- [Project Status](#project status)
 - [Maintainers](#maintainers)
 - [License](#license)
 
@@ -158,6 +159,7 @@ Both the CLI and gateway run using our Deece package for Go. We have released th
 ### `Library`
 
 
+## Project Status
 
 
 
