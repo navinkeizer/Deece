@@ -168,7 +168,7 @@ For Deece to work there are a number of requirements and dependencies. To run as
 
 To run the client, first [IPFS](https://docs.ipfs.io/install/command-line/#system-requirements), [Go](https://golang.org/doc/install) (tested for version 1.13.7, newer versions should work with minor modifications), and [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) must be installed. 
 
-Next we need to download from source:
+Next we need to install from source:
 
 ```shell
 git clone github.com/navinkeizer/Deece
@@ -194,7 +194,7 @@ sudo make &&\
 sudo make install
 ```
 
-Other relevant go packages can then be installed:
+other relevant go packages can then be installed:
 
 ```
 $ go env GIT_TERMINAL_PROMPT=1
