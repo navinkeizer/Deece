@@ -8,12 +8,14 @@ import (
 	"log"
 )
 
+//structure for returning search results
 type QueryResult struct {
 	SearchTerm string `json:"searchTerm"`
 	CID        string `json:"CID"`
 	Metadata   string `json:"metadata"`
 }
 
+//function to return all results for each keyword
 func perTermServer1(terms []string, locations []string) ([]QueryResult, error) {
 
 	var searchResult []QueryResult
@@ -55,6 +57,7 @@ func perTermServer1(terms []string, locations []string) ([]QueryResult, error) {
 	return searchResult, nil
 }
 
+//function to return combined result for two keywords
 func twoTerm(terms []string, locations []string) ([]QueryResult, error) {
 	var combinedsearchResult []QueryResult
 
@@ -105,6 +108,7 @@ func twoTerm(terms []string, locations []string) ([]QueryResult, error) {
 	}
 }
 
+//function to decide which results to fetch, and returns to doSearch functions
 func resultsWordServer1(searchterms []string, indexlocation []string) ([]QueryResult, error) {
 
 	if len(searchterms) == 2 {

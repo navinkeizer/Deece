@@ -132,6 +132,7 @@ func DoCrawlClient(name string, t string) error {
 	return nil
 }
 
+//search to be used from the gateway server
 func DoSearch1(query string) ([]QueryResult, error) {
 
 	searchTerms := strings.Split(query, " ")
@@ -205,6 +206,7 @@ func DoSearch1(query string) ([]QueryResult, error) {
 	return qResult, nil
 }
 
+//search to be used from the client
 func DoSearchClient(searchTerms []string) error {
 
 	//get the latest TLI file

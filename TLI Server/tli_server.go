@@ -22,6 +22,7 @@ const (
 	passWord      = "FsXEzxp1EVmJjSNAZh"
 )
 
+//function to check if TLI directory exists, otherwise create one
 func SetTLIDirectory() error {
 	if _, err := os.Stat("./TLI"); os.IsNotExist(err) {
 		err := os.Mkdir("./TLI", 0700)
@@ -32,6 +33,7 @@ func SetTLIDirectory() error {
 	return nil
 }
 
+//constantly adds externally added files to pins on server
 func pinAll(newcid string) {
 
 	cat, err := shell.Cat(newcid)
@@ -72,6 +74,7 @@ func pinAll(newcid string) {
 	log.Println("Finished pinning files")
 }
 
+//sets up the tli and starts pinning
 func setup() error {
 	shell.SetTimeout(time.Duration(1000000000000))
 	t, err := shell.Resolve(TLIcid)
@@ -83,11 +86,13 @@ func setup() error {
 	return nil
 }
 
+//function to check if traffic from client is over
 func isTransportOver(data string) (over bool) {
 	over = strings.HasSuffix(data, StopCharacter)
 	return
 }
 
+//updates the ipns record and starts pinning new file
 func updateIPNS(newcid string) error {
 
 	err := shell.Publish("", "/ipfs/"+newcid)
@@ -105,6 +110,7 @@ func updateIPNS(newcid string) error {
 	return nil
 }
 
+//sets up socket
 func SocketServer(port int) {
 
 	listen, err := net.Listen("tcp4", ":"+strconv.Itoa(port))
@@ -125,6 +131,8 @@ func SocketServer(port int) {
 
 }
 
+//connects to client and returns results
+//depending on the message
 func handler(conn net.Conn) {
 
 	log.Println("Connected to: " + conn.RemoteAddr().String())

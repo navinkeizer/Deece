@@ -114,6 +114,7 @@ func ExtractPdfDataOCR(name string) ([]string, error) {
 
 }
 
+//function to check if an extry exists in the TLI, returns the position (or where to insert)
 func checkTli1(entry string, records [][]string) (bool, string, int) {
 
 	i := sort.Search(len(records), func(i int) bool { return entry <= records[i][0] })
@@ -125,6 +126,7 @@ func checkTli1(entry string, records [][]string) (bool, string, int) {
 	}
 }
 
+//retrieves latest TLI data to use in indexing
 func setTLI() ([][]string, error) {
 	latestTLI, err := Shell.Resolve(TLI)
 	if err != nil {
@@ -175,6 +177,10 @@ func setTLI() ([][]string, error) {
 	return records, nil
 }
 
+//indexing from the server
+//checks if entry exist in TLI
+//check if entry for specific document exist in KSI, otherwise add
+//adds to IPNS
 func CreateIndexEntryServer1(data []string, cid string) error {
 
 	TopLevelIndex, err := setTLI()
@@ -281,7 +287,6 @@ func CreateIndexEntryServer1(data []string, cid string) error {
 					log.Println(err)
 					continue
 				}
-				//fmt.Println("changes TLI")
 				TopLevelIndex[TLIposition][1] = id
 				change = true
 			}
@@ -326,7 +331,6 @@ func CreateIndexEntryServer1(data []string, cid string) error {
 			TopLevelIndex = append(TopLevelIndex, []string{""})
 			copy(TopLevelIndex[TLIposition+1:], TopLevelIndex[TLIposition:])
 			TopLevelIndex[TLIposition] = e
-			//fmt.Println("changes TLI")
 			change = true
 		}
 
@@ -353,19 +357,17 @@ func CreateIndexEntryServer1(data []string, cid string) error {
 			log.Println(err)
 		}
 
-		//Shell.SetTimeout(time.Duration(1000000000000))
 		err = Shell.Publish("", "/ipfs/"+contentid)
 		if err != nil {
 			log.Println(err)
 			return err
 		}
-		//Shell.SetTimeout(time.Duration(10000000000))
 
 	}
 	return nil
 }
 
-//todo: test client function
+//indexing from the client
 func CreateIndexEntryClient1(data []string, cid string) error {
 
 	TopLevelIndex, err := setTLI()
@@ -377,9 +379,6 @@ func CreateIndexEntryClient1(data []string, cid string) error {
 
 	//index all words in data
 	for _, s := range data {
-		//fmt.Println(TopLevelIndex)
-
-		//fmt.Println(s)
 
 		//remove empty or 1 letter entries
 		if s == "" || len(s) == 1 {
@@ -393,7 +392,6 @@ func CreateIndexEntryClient1(data []string, cid string) error {
 		// otherwise create one
 		if exist {
 
-			//fmt.Println("found2")
 			cat, err := Shell.Cat(indexCID)
 			if err != nil {
 				log.Println(err)

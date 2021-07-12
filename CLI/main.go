@@ -24,6 +24,8 @@ var (
 	app1          = cli.NewApp()
 )
 
+//load parameters from config file
+//requires config file to be present
 func setConfig() error {
 	file, err := os.Open("./config1.json")
 	if err != nil {
@@ -133,6 +135,7 @@ func commands() {
 	}
 }
 
+//main CLI program
 func main() {
 	err := setConfig()
 	if err != nil {
@@ -149,5 +152,3 @@ func main() {
 	}
 
 }
-
-//todo: add pinning of TLI similar to server

@@ -114,6 +114,7 @@ func getTLI() (string, error) {
 	return tli, nil
 }
 
+//checks if required directories are present, if not create them
 func setDirectories() error {
 	if _, err := os.Stat("./TLI"); os.IsNotExist(err) {
 		err := os.Mkdir("./TLI", 0700)
@@ -142,6 +143,7 @@ func setDirectories() error {
 	return nil
 }
 
+//starts pinning new TLI cid and removes old entry
 func updatePin(newTliCid string) {
 	err := Shell.Pin(newTliCid)
 	err = Shell.Unpin(latestTliCid)
