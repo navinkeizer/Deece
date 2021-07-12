@@ -69,6 +69,7 @@ func pinAll(newcid string) {
 		}
 	}
 	_ = os.Truncate("./TLI/temp.csv", 0)
+	log.Println("Finished pinning files")
 }
 
 func setup() error {
