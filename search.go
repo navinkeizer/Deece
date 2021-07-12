@@ -105,8 +105,6 @@ func twoTerm(terms []string, locations []string) ([]QueryResult, error) {
 	}
 }
 
-//todo: add functionality: if one of the index files cannot be retrieved, still return the one that can be
-//todo: return appropriate error/message
 func resultsWordServer1(searchterms []string, indexlocation []string) ([]QueryResult, error) {
 
 	if len(searchterms) == 2 {
@@ -114,7 +112,7 @@ func resultsWordServer1(searchterms []string, indexlocation []string) ([]QueryRe
 
 			comres, err := twoTerm(searchterms, indexlocation)
 			if err != nil {
-				return nil, err
+				log.Println(err)
 			}
 
 			singres, err := perTermServer1(searchterms, indexlocation)

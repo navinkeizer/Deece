@@ -1,4 +1,4 @@
-[comment]: <> (add logo image)
+<img src="./images/DEECElogo.png" width="700" >
 
 
 # Deece
