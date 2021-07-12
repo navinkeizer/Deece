@@ -3,7 +3,7 @@
 
 # Deece
 
-[![build passing](https://img.shields.io/badge/build-passing-green)](www.deece.nl/web)
+[![build passing](https://img.shields.io/badge/build-passing-green)](CLI)
 [![readme deece](https://img.shields.io/badge/readme-deece-red)]()
 
 [![license deece](https://img.shields.io/badge/readme-deece-red)]()
