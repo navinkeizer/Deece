@@ -3,7 +3,8 @@
 
 # Deece
 
-[![build passing](https://img.shields.io/badge/build-passing-green)](CLI)
+[![cli passing](https://img.shields.io/badge/cli-passing-green)](CLI)
+[![library passing](https://img.shields.io/badge/library-passing-blue)](Deece)
 [![readme deece](https://img.shields.io/badge/readme-deece-red)](README.md)
 
 [![license deece](https://img.shields.io/badge/readme-deece-red)](LICENSE)
