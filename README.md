@@ -23,6 +23,7 @@ Deece is a, open, collaborative, and decentralised search mechanism for IPFS. An
 - [Install](#install)
   - [`Client`](#client)
   - [`Library`](#library)  
+- [Project Status](#project status)
 - [Maintainers](#maintainers)
 - [License](#license)
 
@@ -58,7 +59,7 @@ There are a number of comparable projects, which have attmpted to solve the prob
 
 Similarly, a number of works aimed to provide distributed seach for P2P storage networks. More recently, The Graph has built a decentralised indexing protocol for blockchain data using cryptocurrency incentives. 
 
-However, none of the above projects captures our specific use case of decentralised search for decentralised Web3 data. 
+However, none of the above projects entirely captures our specific use case of decentralised search for decentralised Web3 data. 
 
 
 
@@ -158,6 +159,7 @@ Both the CLI and gateway run using our Deece package for Go. We have released th
 ### `Library`
 
 
+## Project Status
 
 
 
