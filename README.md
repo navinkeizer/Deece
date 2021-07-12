@@ -91,7 +91,7 @@ An important aspect of any search engine is the addition of entries to the index
 
 The first decision to be made is what content will be added to the index, which we call *curation*. In traditional engines this includes all public Web content. Although this achieves high performance, it may add too much overhead when executed in a decentralised network. Another approach may be curation based on network consensus of important content. For our current system, we allow anyone who believes content to be important to add this to the network. Content can be addressed by CID, DNSLink, ENS, or IPNS identifiers. 
 
-Next, crawling happens, which involves fetching and analysing files to extract important keywords. As mentioned above, our system crawls when somone decides content should be added, and thus manually submites the CID to be crawled. In the future, we envision this to happen automatically when content is uploaded or visited on the network.
+Next, crawling happens, which involves fetching and analysing files to extract important keywords. As mentioned above, our system crawls when somone decides content should be added, and thus manually submites the CID to be crawled. In the future, we envision this to happen automatically when content is uploaded or visited on the network. Besides extracting keywords, other metadata may be added. We currently use the file type (PDF) and timestamp when crawled, but in the future intent to add title, count, size etc.
 
 <img src="./images/crawl.jpg" width="550" >
 
