@@ -137,7 +137,7 @@ GLOBAL OPTIONS:
 
 For easy and lightweight access we have implemented a gateway for our search clients. This can be found at: www.deece.nl/web, and allows for search and crawls on the network based on identifiers (CID's).
 
-<img src="./images/webinterface" width="600" >
+<img src="./images/webinterface.png" width="600" >
 
 
 
