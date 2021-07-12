@@ -162,11 +162,19 @@ Both the CLI and gateway run using our Deece package for Go. We have released th
 
 ## Install
 
-- requirements (run daemon and constant connection to server for speed)
-- password if intending to crawl
-- file structure in folder: TLI, retrieved files, test_index
+For Deece to work there are a number of requirements and dependencies to keep in mind. To run as a client, a local IPFS daemon needs to be running, and to speed up results it helps to add the gateway maintaining the TLI in the peer swarm. To submit changes to the TLI as a client a password is required. Finally, a config file needs to be present in the same directory as the executable to load results. An incomplete executable can be found in this repository.  
 
 ### Client CLI
+
+To run the client, first [IPFS](https://docs.ipfs.io/install/command-line/#system-requirements), [Go](https://golang.org/doc/install) (tested for version 1.13.7, newer versions should work with minor modifications), and [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) must be installed. 
+
+Next we need to download from source:
+
+```shell
+git clone github.com/navinkeizer/Deece
+```
+Next [tesseract-ocr](https://tesseract-ocr.github.io/tessdoc/Installation.html) needs to be installed, as well as other dependencies. 
+
 
 
 ### Go Library
