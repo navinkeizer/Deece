@@ -30,7 +30,6 @@ Deece is an open, collaborative, and decentralised search mechanism for IPFS. An
   - [Go Library](#go-library)  
 - [Project Status](#project-status)
 - [Maintainers](#maintainers)
-- [License](#license)
 
 
 
@@ -186,10 +185,5 @@ Our implementation takes a first principle approach. We aimed to build from the 
 - [@navinkeizer](https://github.com/navinkeizer/)
 - [@igpkb](https://github.com/igpkb/)
 
-
-
-
-
-## License
 
 
