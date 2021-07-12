@@ -173,11 +173,55 @@ Next we need to download from source:
 ```shell
 git clone github.com/navinkeizer/Deece
 ```
-Next [tesseract-ocr](https://tesseract-ocr.github.io/tessdoc/Installation.html) needs to be installed, as well as other dependencies. 
+Next [tesseract-ocr](https://tesseract-ocr.github.io/tessdoc/Installation.html) needs to be installed, as well as other dependencies. For Linux this may look like this: 
+```shell
+sudo apt-get install tesseract-ocr # or sudo apt install tesseract-ocr
+sudo apt install libtesseract-dev
+sudo apt-get install g++ 
+sudo apt-get install autoconf automake libtool
+sudo apt-get install autoconf-archive
+sudo apt-get install pkg-config
+sudo apt-get install libpng-dev
+sudo apt-get install libjpeg8-dev
+sudo apt-get install libtiff5-dev
+sudo apt-get install zlib1g-dev
+wget http://www.leptonica.org/source/leptonica-1.81.1.tar.gz
+sudo tar xf leptonica-1.81.1.tar.gz
+cd leptonica-1.81.1 &&\
+sudo ./configure &&\
+sudo apt install make
+sudo make &&\
+sudo make install
+```
+
+Other relevant go packages can then be installed:
+
+```
+$ go env GIT_TERMINAL_PROMPT=1
+$ go get -t github.com/otiai10/gosseract
+$ go get github.com/navinkeizer/Deece
+```
+
+and the CLI built:
+
+```
+$ sudo go build Deece/CLI/.
+```
+
+and run:
+```
+$ ./CLI [command] [arguments]
+```
 
 
 
 ### Go Library
+
+The package can also be used as a library.
+
+```
+go get github.com/navinkeizer/Deece
+```
 
 
 ## Project Status
