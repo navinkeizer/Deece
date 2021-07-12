@@ -24,6 +24,7 @@ type Configuration struct {
 	TLIcid   string
 }
 
+//extract config file to variables
 func setConfig() error {
 	file, err := os.Open("./config1.json")
 	if err != nil {
