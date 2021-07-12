@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"encoding/csv"
+	"encoding/json"
 	ipfsapi "github.com/ipfs/go-ipfs-api"
 	"io/ioutil"
 	"log"
@@ -10,17 +11,31 @@ import (
 	"os"
 	"strconv"
 	"strings"
-	"time"
 )
 
 var shell *ipfsapi.Shell
 var tli string
+var configuration Configuration
 
-const (
-	TLIcid        = "k51qzi5uqu5dm51kzdsr3pu33tkrzca5pse1kt3i9a7c5m1ai0kremf5c0ooe9"
-	StopCharacter = "\r\n\r\n"
-	passWord      = "FsXEzxp1EVmJjSNAZh"
-)
+const StopCharacter = "\r\n\r\n"
+
+type Configuration struct {
+	PassWord string
+	TLIcid   string
+}
+
+func setConfig() error {
+	file, err := os.Open("./config1.json")
+	if err != nil {
+		return err
+	}
+	decoder := json.NewDecoder(file)
+	err = decoder.Decode(&configuration)
+	if err != nil {
+		return err
+	}
+	return nil
+}
 
 //function to check if TLI directory exists, otherwise create one
 func SetTLIDirectory() error {
@@ -76,10 +91,11 @@ func pinAll(newcid string) {
 
 //sets up the tli and starts pinning
 func setup() error {
-	shell.SetTimeout(time.Duration(1000000000000))
-	t, err := shell.Resolve(TLIcid)
+	//shell.SetTimeout(time.Duration(1000000000000))
+	t, err := shell.Resolve(configuration.TLIcid)
 	tli = t
 	err = shell.Pin(tli)
+	go pinAll(tli)
 	if err != nil {
 		return err
 	}
@@ -99,7 +115,7 @@ func updateIPNS(newcid string) error {
 	if err != nil {
 		return err
 	}
-
+	log.Println("Success adding to IPNS")
 	err = shell.Pin(newcid)
 	err = shell.Unpin(tli)
 	if err != nil {
@@ -156,7 +172,7 @@ func handler(conn net.Conn) {
 	if isTransportOver(data) {
 		request := strings.Split(data, ",")
 		if request[0] == "SET" {
-			if request[1] == passWord {
+			if request[1] == configuration.PassWord {
 				log.Println("RESPONSE: [Adding " + strings.Trim(request[2], StopCharacter) + " to IPNS]")
 				_, err = w.Write([]byte("Adding " + strings.Trim(request[2], StopCharacter) + " as TLI"))
 				err = w.Flush()
@@ -178,8 +194,8 @@ func handler(conn net.Conn) {
 			}
 
 		} else if request[0] == "GET" {
-			log.Println("RESPONSE: [" + TLIcid + "]")
-			_, err = w.Write([]byte(TLIcid))
+			log.Println("RESPONSE: [" + configuration.TLIcid + "]")
+			_, err = w.Write([]byte(configuration.TLIcid))
 			err = w.Flush()
 			if err != nil {
 				log.Println(err)
@@ -199,8 +215,12 @@ func handler(conn net.Conn) {
 }
 
 func main() {
+	err := setConfig()
+	if err != nil {
+		log.Fatal(err)
+	}
 
-	err := SetTLIDirectory()
+	err = SetTLIDirectory()
 	if err != nil {
 		log.Println(err)
 	}
