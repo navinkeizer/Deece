@@ -179,7 +179,7 @@ The current implementation of Deece is still experimental, and therefore may exp
 
 Our implementation takes a first principle approach. We aimed to build from the ground up, rather than relying on existing approaches and solutions for system components. We believe this is necessary as existing solutions may not be optimal for decentralised Web3 content. In other words, there is much work to be done.
 
-*** Currently we occasionally experience issues in the crawling process due to IPNS updates timeing out. We are working on resolving this with alternative solutions. ***
+***Currently we occasionally experience issues in the crawling process due to IPNS updates timeing out. We are working on resolving this with alternative solutions.***
 
 ## Maintainers
 
