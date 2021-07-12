@@ -162,6 +162,8 @@ Both the CLI and gateway run using our Deece package for Go. We have released th
 
 ## Install
 
+***Further installation instructions will be added once tested across different platforms. For now we have provided instructions based on our installation on Linux.***
+
 For Deece to work there are a number of requirements and dependencies. To run as a client, a local IPFS daemon needs to be running, and to speed up results it helps to add the gateway maintaining the TLI in the peer swarm. To submit changes to the TLI as a client a password is required. Finally, a config file needs to be present in the same directory as the executable to load results. An incomplete config file can be found in this repository.  
 
 ### Client CLI
