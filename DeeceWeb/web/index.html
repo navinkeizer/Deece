@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/sticky-footer-navbar/">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/navbar-fixed/">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css">
+  <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/sticky-footer/">
+  <title>DEECE for IPFS</title>
+  <style>@import url("styles.css");
+	#loader {
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid blue;
+  border-right: 16px solid green;
+  border-bottom: 16px solid red;
+  border-left: 16px solid pink;
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+}
+
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+	</style>
+</head>
+
+<body>
+ <header>
+        <!-- Fixed navbar -->
+        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-light">
+            <div class="container">
+                <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                    <li class="nav-item">
+                        <!--<a class="nav-link active" style="color: brown;" href="/web/"><img src="/web/icons/DEECE-logo.png" style="margin-bottom: 30px; margin-top: 10px;"></a>-->
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <section class="text-center container" style="margin-top: 200px;">
+      <a class="nav-link active" style="color: brown;" href="/web/"><img src="/web/icons/DEECE-logo.png" style="margin-bottom: 30px; margin-top: 10px;"></a>      
+<div class="tab">
+  <button class="tablinks" onclick="openTab(event, 'Search')" id="defaultOpen">Search</button>
+  <button class="tablinks" onclick="openTab(event, 'Crawl')">Crawl</button>  
+</div>
+
+<div id="Search" class="tabcontent">
+  <form action="/web/" method="get" id="search-form">
+	  <table style="width:100%;height:100%;table-layout:fixed;overflow:hidden" ><tr>
+		<td style="width:50%"><br /><input type="text" name="q" class="form-control" placeholder="Search..." required>&nbsp;<div class="select"><select name="ctype" id="ctype" style="display:none;"><option value="Text" selected="selected">Text</option><option value="Directory">Directory</option><option value="Image">Image</option><option value="Audio">Audio</option><option value="Video">Video</option></select></div></td>
+	  	<td align="left">&nbsp;<input type="submit" value="Search" class="btn btn-danger" align="right"></td>
+	  </tr></table>	  
+  </form>    
+</div>
+<div id="Crawl" class="tabcontent">
+ <br /> <form action="/web/" method="get" id="crawl-form">
+    <table style="width:100%;height:100%;table-layout:fixed;overflow:hidden" ><tr>
+	<td style="width:50%"><input type="text" name="CID" class="form-control" placeholder="Enter Link to Crawl..." required></td>
+	<td style="width:5%" align="left">&nbsp;<div class="select">
+	<select name="type" id="type"><option value="CID" selected="selected">CID</option><option value="DNS">DNS</option><option value="ENS">ENS</option><option value="IPNS">IPNS</option></select>&nbsp;</div></td>
+	<td style="width:40%" align="left"><input type="submit" value="Crawl" class="btn btn-danger" align="right"></td>
+	</tr></table> 
+	</form>
+</div>
+	      <div id="divresponseMessage"></div>
+<div id="searchresult">
+  <div class="container shadow">
+    <div id="dSearchResults" class="divcontent">
+            <p style="color: red;"><h4>Results from decentralised search for <span style="color: #378855;"><label id="pSearchTerm"/></span></h4></p>
+            <div style="margin-top: 10px;" align="left">
+                <ul class="list-group container">
+                    <li class="list-group-item d-flex justify-content-between align-items-start">
+                        <div class="ms-2 me-auto">
+                            <div class="fw-bold" style="color: #378855;"><label id="lblnumresults"></label> results found so far in <label id="performance-display"></label> seconds.</div>
+			</div>
+                    </li>                    
+                </ul>
+            </div></br>
+		<div id="loader" align="center"></div>
+		<div id="dsearchResultsTable" align="left"></div></br>
+        </div>
+    </div>      
+  </div>            
+</section>
+<br/><br/><br/><br/><br/>
+    <footer class="footer fixed-bottom py-3 px-5 mt-auto bg-light">
+        <p class="float-start text-muted"><a href="https://github.com/navinkeizer/Deece/blob/master/README.md" style="color: crimson;"  target="_blank">License</a></p>
+        <p class="float-end"><a href="https://github.com/navinkeizer/Deece/blob/master/README.md" style="color: crimson;"  target="_blank">About</a></p>
+        <div class="text-center">
+            <span class="text-muted">Docs<a  style="color: crimson; margin-left: 10px;" href="https://github.com/navinkeizer/Deece"  target="_blank">
+                <svg class="octicon octicon-mark-github v-align-middle" height="32" viewBox="0 0 16 16" version="1.1" width="20" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg>
+              </a></span>
+        </div>
+    </footer>
+</body>
+<script>
+var debug = false;
+function openTab(evt, cityName) {
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) { tabcontent[i].style.display = "none"; }
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) { tablinks[i].className = tablinks[i].className.replace(" active", ""); }
+  document.getElementById(cityName).style.display = "block";
+  evt.currentTarget.className += " active";
+  document.getElementById("dSearchResults").style.display = "none";
+  document.getElementById('divresponseMessage').innerHTML = "";
+}
+// Get the element with id="defaultOpen" and click on it
+document.getElementById("defaultOpen").click();
+document.getElementById("dSearchResults").style.display = "none";
+document.getElementById('divresponseMessage').innerHTML = "";
+
+var loadTime = 0;
+var intentionalDelayInMilliseconds = 1000; //1000 Milliseconds or 1 second. this is just to test the loader animation
+    window.onload = function() {
+    loadTime = window.performance.timing.domContentLoadedEventEnd - window.performance.timing.navigationStart;
+    if(debug) console.log('Page load time is ' + loadTime / 1000);
+    performanceDisplay = document.getElementById("performance-display") // get a reference to the paragraph
+    performanceDisplay.innerText = loadTime / 1000 // put the value of the variable loadTime into the paragraph
+}
+function getIcon (metadatastring) {
+	var iconbase = "icons/";
+	var icons = {'pdf': 'pdf-icon.jpg', 'default': 'file-icon.png'};
+	if(debug) console.log(metadatastring);
+	try{var icon =  (icons[metadatastring.split(';')[0]] || icons['default']);	
+	return iconbase + ((typeof icon !== 'undefined')?icon:icons['default']);}
+	catch{return iconbase + icons['default'];}
+	}
+function getDateTime (metadatastring) {
+	try {var dt= metadatastring.split(';')[1]; return (typeof dt !== 'undefined')?dt:(new Date()).toLocaleString(); }
+	catch{return (new Date()).toLocaleString();}
+	}
+
+   function doSearch(q, ctype) 
+    {
+      
+      if(debug) console.log("func=doSearch");
+      lblnumresults= document.getElementById("lblnumresults");
+      lblnumresults.innerHTML = "0";
+      pSearchTerm = document.getElementById("pSearchTerm");
+      pSearchTerm.innerHTML = q;
+      dsearchResultsTable = document.getElementById("dsearchResultsTable");
+      document.getElementById("loader").style.display = "block";
+      document.getElementById("dSearchResults").style.display = "block";
+      const pRespMsg = document.createElement('p');
+      pRespMsg.style.cssText ="color:red";
+    var url = new URL('/search', document.baseURI)
+    var params = {q:q.toLowerCase(),ctype:ctype} // or:
+    url.search = new URLSearchParams(params).toString();
+    var keyterm = "" 
+    var ul
+    var resultCount = 0
+     try{ 
+	   	setTimeout(function() {
+  		
+	     let asyncfetch = (async function () {
+    		let fetchstarttime = performance.now();
+   
+	await  fetch(url,{method: 'GET'})
+      .then(response => response.json())
+      .then(searchResultsList => {
+        if(debug) console.log(searchResultsList);
+        lblnumresults.innerHTML = ((searchResultsList!=null)?searchResultsList.length:0).toString();
+		if(searchResultsList==null) {document.getElementById("loader").style.display = "none";if(debug) console.log("Zero results found");}
+	if(debug) console.log("lblnumresults.innerHTML="+lblnumresults.innerHTML);      
+        searchResultsList.forEach(searchResult => {
+                  if(debug) console.log(searchResult);
+                  if(debug) console.log("keyterm="+keyterm+"&searchterm="+searchResult.searchTerm+"CID="+searchResult.CID+"metadata="+searchResult.metadata);
+                  if(keyterm !== searchResult.searchTerm)
+                  {// add header row
+                    if(debug) console.log("adding header row..");
+                    if(keyterm != "")
+			    dsearchResultsTable.appendChild(ul);
+		    keyterm = searchResult.searchTerm;
+		    if(debug) console.log("keyterm="+keyterm);
+                    p = document.createElement("p"); 
+                    p.innerHTML = "<h5>"+keyterm+"</h5>";
+                    dsearchResultsTable.appendChild(p);
+		    if(debug) console.log("Added in header - keyterm="+keyterm);
+                    ul = document.createElement("ul");ul.className= "list-group container";                   
+		    if(debug) console.log("ul created") ;
+                  } 
+		    if(debug) console.log("Adding child row...") ;	
+                    ulli = document.createElement("ul");ulli.className= "list-group-item d-flex justify-content-between align-items-start  shadow-sm p-3 mb-3 bg-body rounded";                   
+                    ullidiv = document.createElement("div");ullidiv.className="ms-2 me-auto";
+                    ullidivdiv = document.createElement("div");ullidivdiv.className="fw-bold";
+                    ullidivdiv.innerHTML = searchResult.CID;
+                    ullidiva= document.createElement("a"); var createAText = document.createTextNode("https://gateway.ipfs.io/ipfs/" + searchResult.CID);
+                    ullidiva.setAttribute('href', "https://gateway.ipfs.io/ipfs/" + searchResult.CID);ullidiva.setAttribute('target', "_blank");
+                    ullidiva.appendChild(createAText);
+		    ulliimg = document.createElement("img");ulliimg.setAttribute('src',getIcon(searchResult.metadata));
+                    ullispan = document.createElement("span");ullispan.className="badge bg-primary rounded-pill";
+                    ullispan.innerHTML = getDateTime(searchResult.metadata); if(debug) console.log(ullispan.innerHTML);
+                    ullidiv.appendChild(ullidivdiv);
+                    ullidiv.appendChild(ullidiva);
+                    ulli.appendChild(ullidiv);
+                    ulli.appendChild(ullispan);
+		    ulli.appendChild(ulliimg);
+                    ul.appendChild(ulli);
+		    if(debug) console.log("Added child row...") ;	
+                }); dsearchResultsTable.appendChild(ul);document.getElementById("loader").style.display = "none";
+        });
+	 document.getElementById("performance-display").innerText = (Math.round(loadTime + performance.now() - fetchstarttime) / 1000).toFixed(3);
+	 });
+		asyncfetch(); }, intentionalDelayInMilliseconds);
+	} catch (error) {document.getElementById("loader").style.display = "none"; if(debug) console.log("Error:"+error.message);/*pRespMsg.innerHTML ="Error happened while getting search results:";*/ }  
+	divresponseMessage.appendChild(pRespMsg); 
+    }
+</script>
+<script>
+ function doCrawl(CID, type)
+    {
+    if(debug) console.log("func=doCrawl");
+      crawlTargetTable = document.getElementById("crawlTargetTable");
+      const divresponseMessage = document.getElementById('divresponseMessage');
+      divresponseMessage.innerHTML = "";
+      const pRespMsg = document.createElement('p');
+      pRespMsg.style.cssText ="color:red";
+    var url = new URL('/crawlTarget', document.baseURI)
+    var params = {CID:CID, type:type} // or:
+    url.search = new URLSearchParams(params).toString();
+      fetch(url,{method: 'GET'})
+      .then(response => response.json())
+      .then(json => { 
+        json.forEach(message => {
+          pRespMsg.innerHTML = `${message.text}`          
+        })
+       }).catch(function() {
+        if(debug) console.log("error");pRespMsg.innerHTML ="Error happened during crawl submission.";
+    });divresponseMessage.appendChild(pRespMsg);
+    }
+</script>
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const q = urlParams.get('q');
+    const ctype = urlParams.get('ctype');
+    const CID = urlParams.get('CID');
+    const type = urlParams.get('type');
+   if(debug) console.log("q="+q+"&ctype="+ctype);
+    if(q)
+      doSearch(q,ctype);
+    else if(type)
+      doCrawl(CID, type);
+    else
+    { /* do nothing*/ }
+  </script> 
+</html>
