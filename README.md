@@ -22,8 +22,8 @@ Deece is a, open, collaborative, and decentralised search mechanism for IPFS. An
   - [`Gateway`](#gateway) 
   - [`Library`](#library)
 - [Install](#install)
-  - [Client CLI](#client)
-  - [Go Library](#library)  
+  - [Client CLI](#client cli)
+  - [Go Library](#go library)  
 - [Project Status](#project status)
 - [Maintainers](#maintainers)
 - [License](#license)
@@ -163,10 +163,10 @@ Both the CLI and gateway run using our Deece package for Go. We have released th
 - password if intending to crawl
 - file structure in folder: TLI, retrieved files, test_index
 
-### `Client`
+### Client CLI
 
 
-### `Library`
+### Go Library
 
 
 ## Project Status
