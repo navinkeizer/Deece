@@ -2,7 +2,7 @@
   "ServerIP" : "34.72.162.7",
   "ServerPort": 3333,
   "EthGateway": "https://mainnet.infura.io/EXAMPLE",
-  "TLI" : "k51qzi5uqu5dm51kzdsr3pu33tkrzca5pse1kt3i9a7c5m1ai0kremf5c0ooe9",
+  "TLI" : "k51qzi5uqu5dknzcklexyqi8kfhfy8oh8ai7tinrlaa0m6sm6hk1mwangfnafn",
   "PassW" : "REQUEST",
-  "ServerAddr" : "/ip4/34.147.95.251/tcp/4001/p2p/12D3KooWRuMvrbAVzzLL4iCrxVQuyyE8xaBG6NT4x1fbAY2WpZgc"
+  "ServerAddr" : "/ip4/34.72.162.7/tcp/4001/p2p/12D3KooWMvWgHngwcyo6KfkAdkbc6Bi4JMRhU6QEFS51iAx3nDop"
 }
