@@ -14,7 +14,6 @@ import (
 	"sort"
 	"strconv"
 	"strings"
-	"time"
 )
 
 const (
@@ -250,8 +249,9 @@ func CreateIndexEntryServer1(data []string, cid string) error {
 			} else {
 
 				var entry = []string{
-					cid, "pdf;" + time.Now().Format("2006-01-02 15:04"),
+					cid, "pdf",
 				}
+
 				records = append(records, []string{""})
 				copy(records[i+1:], records[i:])
 				records[i] = entry
@@ -298,8 +298,11 @@ func CreateIndexEntryServer1(data []string, cid string) error {
 				continue
 			}
 
+			//var entry = [][]string{
+			//	{cid, "pdf;" + time.Now().Format("2006-01-02 15:04")},
+			//}
 			var entry = [][]string{
-				{cid, "pdf;" + time.Now().Format("2006-01-02 15:04")},
+				{cid, "pdf"},
 			}
 
 			writer := csv.NewWriter(f)
@@ -436,8 +439,9 @@ func CreateIndexEntryClient1(data []string, cid string) error {
 			if i < len(records) && records[i][0] == cid {
 			} else {
 				var entry = []string{
-					cid, "pdf;" + time.Now().Format("2006-01-02 15:04"),
+					cid, "pdf",
 				}
+
 				records = append(records, []string{""})
 				copy(records[i+1:], records[i:])
 				records[i] = entry
@@ -486,8 +490,11 @@ func CreateIndexEntryClient1(data []string, cid string) error {
 				continue
 			}
 
+			//var entry = [][]string{
+			//	{cid, "pdf;" + time.Now().Format("2006-01-02 15:04")},
+			//}
 			var entry = [][]string{
-				{cid, "pdf;" + time.Now().Format("2006-01-02 15:04")},
+				{cid, "pdf"},
 			}
 
 			writer := csv.NewWriter(f)
