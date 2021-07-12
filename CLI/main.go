@@ -1,4 +1,4 @@
-package CLI
+package main
 
 import (
 	"Deece"
