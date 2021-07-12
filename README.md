@@ -3,6 +3,8 @@
 
 # Deece
 
+[![standard-readme compliant](https://img.shields.io/badge/Deece-Readme-red)]
+
 
 Deece is a, open, collaborative, and decentralised search mechanism for IPFS. Any node running the client is able to crawl content on IPFS and add this to the index, which itself is stored in a decentralised manner on IPFS. This allows for decentralised search on decentralised content. A gateway to access functionality is implemented at www.deece.nl/web.  
 
