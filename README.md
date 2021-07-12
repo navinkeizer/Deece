@@ -1,4 +1,4 @@
-<img src="./images/DEECElogo.png" width="700" >
+<img src="./images/DEECElogo.png" width="500" >
 
 
 # Deece
