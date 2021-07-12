@@ -9,7 +9,7 @@ import (
 )
 
 func main() {
-	Deece.Shell, Deece.Client = Deece.ConnectServer("https://mainnet.infura.io/v3/5c04e573d61b4e5a8fc0f3312becfdbc","k51qzi5uqu5dm51kzdsr3pu33tkrzca5pse1kt3i9a7c5m1ai0kremf5c0ooe9") //, "127.0.0.1",3333)
+	Deece.Shell, Deece.Client = Deece.ConnectServer("https://mainnet.infura.io/v3/5c04e573d61b4e5a8fc0f3312becfdbc","k51qzi5uqu5dknzcklexyqi8kfhfy8oh8ai7tinrlaa0m6sm6hk1mwangfnafn") //, "127.0.0.1",3333)
 	RunCrons("all","corpus","crawlCIDs.txt")
 	r := newRouter()
 	err := http.ListenAndServe(":80", r)
