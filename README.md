@@ -92,10 +92,10 @@ The first decision to be made is what content will be added to the index, which 
 
 Next, crawling happens, which involves fetching and analysing files to extract important keywords. As mentioned above, our system crawls when somone decides content should be added, and thus manually submites the CID to be crawled. In the future, we envision this to happen automatically when content is uploaded or visited on the network.
 
+<img src="./images/crawl.jpg" width="550" >
+
 After exracting the keywords (and producing the RWI), the index needs to be stored. For storage we use IPFS, as this allows for decentralised collaborative storage. We have decided to maintain a two-level hierarchy. Each keyword will have an asociated index file (KSI) where nodes can find which content contains those keywords. A seperate index is kept (TLI) to point to the identifiers of the KSI's, and this is published to an IPNS name from our gateway server. When a node updates the KSI's after crawling a file, they update the pointer in the TLI to these files, and requests the gateway to update the pointer which the IPNS record resolves to. This way the IPNS record points to the latest version of the TLI, which in turn points to the latest versions of the KSI's.
 
-
-<img src="./images/crawl.jpg" width="550" >
 
 
 
