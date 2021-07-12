@@ -10,7 +10,6 @@ import (
 	"os"
 	"sort"
 	"strings"
-	"time"
 )
 
 //function to setup the local connections to ipfs, eth gateway etc.
@@ -21,7 +20,6 @@ func ConnectServer(Infura string, tli string) (*ipfsapi.Shell, *ethclient.Client
 		log.Println(err)
 	}
 	sh := ipfsapi.NewShell("localhost:5001")
-	sh.SetTimeout(time.Duration(100000000000))
 	cli, err := ethclient.Dial(Infura)
 	if err != nil {
 		log.Println(err)

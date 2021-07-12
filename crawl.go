@@ -3,7 +3,7 @@ package Deece
 import (
 	"github.com/ipfs/go-dnslink"
 	//shell "github.com/ipfs/go-ipfs-api"
-	"github.com/wealdtech/go-ens/v3"
+	"github.com/wealdtech/go-ens"
 	"io/ioutil"
 	"log"
 	"strings"
