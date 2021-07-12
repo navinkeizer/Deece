@@ -88,7 +88,7 @@ One important aspect in search engines is the ranking mechanism. This generally 
 
 An important aspect of any search engine is the addition of entries to the index. This process involves a number of steps, which we describe below. 
 
-The first decision to be made is what content will be added to the index, which we call *curation*. In traditional engines this includes all public Web content. Although this achieves high performance, it may add too much overhead when executed in a decentralised network. Another approach may be curation based on network consensus of important content. For our current system, we allow anyone who believes content to be important to add this to the network, if they posses the password (these nodes can be seen as 'authoroties').
+The first decision to be made is what content will be added to the index, which we call *curation*. In traditional engines this includes all public Web content. Although this achieves high performance, it may add too much overhead when executed in a decentralised network. Another approach may be curation based on network consensus of important content. For our current system, we allow anyone who believes content to be important to add this to the network. Content can be addressed by CID, DNSLink, ENS, or IPNS identifiers. 
 
 Next, crawling happens, which involves fetching and analysing files to extract important keywords. As mentioned above, our system crawls when somone decides content should be added, and thus manually submites the CID to be crawled. In the future, we envision this to happen automatically when content is uploaded or visited on the network.
 
@@ -96,17 +96,15 @@ Next, crawling happens, which involves fetching and analysing files to extract i
 
 After exracting the keywords (and producing the RWI), the index needs to be stored. For storage we use IPFS, as this allows for decentralised collaborative storage. We have decided to maintain a two-level hierarchy. Each keyword will have an asociated index file (KSI) where nodes can find which content contains those keywords. A seperate index is kept (TLI) to point to the identifiers of the KSI's, and this is published to an IPNS name from our gateway server. When a node updates the KSI's after crawling a file, they update the pointer in the TLI to these files, and requests the gateway to update the pointer which the IPNS record resolves to. This way the IPNS record points to the latest version of the TLI, which in turn points to the latest versions of the KSI's.
 
+At present, client nodes can change the TLI if they posses a password, which can be obtained from the maintainers of this project. This way, potential malicious entries are less likely. Nodes with the passwords can can be seen as 'authoroties' in the network. 
 
 
 
 ### Performance Considerations
 
+During development and testing we have made a number of observations with regards to performance. As our solution relies heavily on IPFS, so does our perforamnce. We found that significant delays may occur when nodes have not added the gateway peer in their swarm of peers. While we have added this to our CLI, connection still drops occasionally. While this does not break the system, it does add delays. 
 
-
-- mention ipns is slow and may become a performance bottleneck. Instead other mechanisms like dnslilnk, or blockchain based naming might be more appropriate. 
-
-
-
+Furthermore, updating our IPNS entry from the gateway can be very slow, and may become a performance bottleneck when crawl traffic increases. We have started looking into alternatives, but leave implementation to future releases. One option is to use the DNS to store a pointer to the latest TLI record, but this brings a number of aditonal challenges inherent to the DNS. A blockchain based name registry such as ENS may also be used, although frequent updates to the resolver contract may become a large expense.       
 
 
 ## Components
