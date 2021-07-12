@@ -43,7 +43,7 @@ Deece allows for decentralised search on IPFS data. This is achieved by a networ
 
 Deece allows for two specific actions: `search` and `crawl`. Search queries the latest TLI to find the KSI for each keyword in the user query, and then fetches the results from these, which are displayed to the user. Currently ranking of results is ordered based on CID, but more sophisticated mechanisms should be developed. We allow for combined results for up to two keywords, which will be extended in the future. 
 
-There are currently three ways to access Deece. First, there is the client software which uses a command line interface. Second, we have implemented a gateway service(www.deece.nl/web), which runs an instance of our client node and allows "light clients" to interact with the search without installing other software. Finally, we have released our code used by the CLI and gateway in the form of a Go library.  
+There are currently three ways to access Deece. First, there is the client software which uses a command line interface. Second, we have implemented a gateway service(www.deece.nl/web/), which runs an instance of our client node and allows "light clients" to interact with the search without installing other software. Finally, we have released our code used by the CLI and gateway in the form of a Go library.  
 
 *The initial version of Deece relies on a trusted node (the same node as our gateway) to update the IPNS record pointing to the latest version of the TLI. When clients crawl, the final step involves them sending an update request to this server. At the moment, clients will need to specify a password in their config file, which can be obtained from the maintainers, as security measures will be implemented later.*
 
