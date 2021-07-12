@@ -22,6 +22,16 @@ const (
 	passWord      = "FsXEzxp1EVmJjSNAZh"
 )
 
+func SetTLIDirectory() error {
+	if _, err := os.Stat("./TLI"); os.IsNotExist(err) {
+		err := os.Mkdir("./TLI", 0700)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
 func pinAll(newcid string) {
 
 	cat, err := shell.Cat(newcid)
@@ -180,8 +190,14 @@ func handler(conn net.Conn) {
 }
 
 func main() {
+
+	err := SetTLIDirectory()
+	if err != nil {
+		log.Println(err)
+	}
 	shell = ipfsapi.NewShell("localhost:5001")
-	err := setup()
+
+	err = setup()
 	if err != nil {
 		log.Println(err)
 	}

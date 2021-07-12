@@ -16,6 +16,10 @@ import (
 //function to setup the local connections to ipfs, eth gateway etc.
 //to be used at gateway server running the web interface
 func ConnectServer(Infura string, tli string) (*ipfsapi.Shell, *ethclient.Client) {
+	err := setDirectories()
+	if err != nil {
+		log.Println(err)
+	}
 	sh := ipfsapi.NewShell("localhost:5001")
 	sh.SetTimeout(time.Duration(100000000000))
 	cli, err := ethclient.Dial(Infura)
@@ -29,8 +33,11 @@ func ConnectServer(Infura string, tli string) (*ipfsapi.Shell, *ethclient.Client
 //function to setup the local connections to ipfs, eth gateway, gateway server address etc.
 //to be used by clients using the CLI application
 func ConnectClient(Infura string, tli string, ip string, port int, passW string) (*ipfsapi.Shell, *ethclient.Client) {
+	err := setDirectories()
+	if err != nil {
+		log.Println(err)
+	}
 	sh := ipfsapi.NewShell("localhost:5001")
-	//sh.SetTimeout(time.Duration(50000000000))
 	cli, err := ethclient.Dial(Infura)
 	if err != nil {
 		log.Println(err)
@@ -215,6 +222,8 @@ func DoSearchClient(searchTerms []string) error {
 		log.Println(err)
 		return err
 	}
+
+	go updatePin(cidTLI)
 
 	result, err := ioutil.ReadAll(cat)
 	if err != nil {

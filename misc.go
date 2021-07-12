@@ -8,19 +8,22 @@ import (
 	"github.com/multiformats/go-multibase"
 	"github.com/pkg/errors"
 	"github.com/wealdtech/go-multicodec"
+	"log"
 	"net"
+	"os"
 	"strconv"
 	"strings"
 )
 
 //defining the global variables used
 var (
-	Shell      *ipfsapi.Shell
-	Client     *ethclient.Client
-	TLI        string
-	serverPort int
-	serverIP   string
-	passWord   string
+	Shell        *ipfsapi.Shell
+	Client       *ethclient.Client
+	TLI          string
+	serverPort   int
+	serverIP     string
+	passWord     string
+	latestTliCid string
 )
 
 //function to convert to base32 encoding
@@ -109,4 +112,41 @@ func getTLI() (string, error) {
 	tli := strings.Trim(data, "\r\n\r\n")
 	//log.Printf("Update TLI: %s",tli)
 	return tli, nil
+}
+
+func setDirectories() error {
+	if _, err := os.Stat("./TLI"); os.IsNotExist(err) {
+		err := os.Mkdir("./TLI", 0700)
+		if err != nil {
+			return err
+		}
+	}
+	if _, err := os.Stat("./retrieved_files"); os.IsNotExist(err) {
+		err := os.Mkdir("./retrieved_files", 0700)
+		if err != nil {
+			return err
+		}
+	}
+	if _, err := os.Stat("./test_index"); os.IsNotExist(err) {
+		err := os.Mkdir("./test_index", 0700)
+		if err != nil {
+			return err
+		}
+	} else {
+		err := os.RemoveAll("./test_index/")
+		err = os.Mkdir("./test_index", 0700)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+func updatePin(newTliCid string) {
+	err := Shell.Pin(newTliCid)
+	err = Shell.Unpin(latestTliCid)
+	if err != nil {
+		log.Println(err)
+	}
+	latestTliCid = newTliCid
 }
