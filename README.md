@@ -65,9 +65,7 @@ However, none of the above projects entirely captures our specific use case of d
 
 ## Architecture Design
 
-Our architecure relies on a number of client nodes, which collectively maintain and add to the index, and are able to perform searches. We have taken the approach of finishing a working protype of our architecture first, and adding features incrementally. Therefore, our current version relies on a trusted node (gateway) to update the TLI IPNS record. As there is no added security or incentivisation implemented, we have used a simple password to allow new client nodes to add to the index. 
-
-- mention the assumptions: altruistic as we are only a prototype
+Our architecure relies on a number of client nodes, which collectively maintain and add to the index, and are able to perform searches. We have taken the approach of finishing a working protype of our architecture first, and adding features incrementally. Therefore, our current version relies on a trusted node (gateway) to update the TLI IPNS record. As there is no added security or incentivisation implemented, we have used a simple password to allow new client nodes to add to the index. While security may be insufficient in the future, we assume an altriustic model for our early stage release. 
 
 In the future we envision there to be added security and incentives in place, which allign nodes to be honest when updating the index. These may be in the form of cryptocurreny rewards, slashing, reputation, etc. One way to fund rewards to honest nodes could be by incorporating advertisement into the protocol and allow advertisement fees to be delegated to the nodes maintining the network. 
 
@@ -87,15 +85,28 @@ One important aspect in search engines is the ranking mechanism. This generally 
 
 
 ### Crawl
--curation (currently only manual. envision in future to be automatic when visiting a page or content)
--crawl
--index
--add to tli
+
+An important aspect of any search engine is the addition of entries to the index. This process involves a number of steps, which we describe below. 
+
+The first decision to be made is what content will be added to the index, which we call *curation*. In traditional engines this includes all public Web content. Although this achieves high performance, it may add too much overhead when executed in a decentralised network. Another approach may be curation based on network consensus of important content. For our current system, we allow anyone who believes content to be important to add this to the network, if they posses the password (these nodes can be seen as 'authoroties').
+
+Next, crawling happens, which involves fetching and analysing files to extract important keywords. As mentioned above, our system crawls when somone decides content should be added, and thus manually submites the CID to be crawled. In the future, we envision this to happen automatically when content is uploaded or visited on the network.
+
+After exracting the keywords (and producing the RWI), the index needs to be stored. For storage we use IPFS, as this allows for decentralised collaborative storage. We have decided to maintain a two-level hierarchy. Each keyword will have an asociated index file (KSI) where nodes can find which content contains those keywords. A seperate index is kept (TLI) to point to the identifiers of the KSI's, and this is published to an IPNS name from our gateway server. When a node updates the KSI's after crawling a file, they update the pointer in the TLI to these files, and requests the gateway to update the pointer which the IPNS record resolves to. This way the IPNS record points to the latest version of the TLI, which in turn points to the latest versions of the KSI's.
+
 
 <img src="./images/crawl.jpg" width="550" >
 
 
+
+### Performance Considerations
+
+
+
 - mention ipns is slow and may become a performance bottleneck. Instead other mechanisms like dnslilnk, or blockchain based naming might be more appropriate. 
+
+
+
 
 
 ## Components
