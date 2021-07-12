@@ -10,7 +10,7 @@
 
 Deece is an open, collaborative, and decentralised search mechanism for IPFS. Any node running the client is able to crawl content on IPFS and add this to the index, which itself is stored in a decentralised manner on IPFS. This allows for decentralised search on decentralised content. A gateway to access functionality is implemented at www.deece.nl/web.  
 
-(*The current implementation is still highly experimental. It only supports search and crawl on PDF's on IPFS, and requires delegation of trust to the gateway for updating the TLI entry. See [project status](#project status)*).
+***The current implementation is still highly experimental. It only supports search and crawl on PDF's on IPFS, and requires delegation of trust to the gateway for updating the TLI entry. See [project status](#project-status)***.
 
 ## Table of Contents
 
