@@ -196,7 +196,7 @@ sudo make &&\
 sudo make install
 ```
 
-other relevant go packages can then be installed:
+other relevant Go packages may then be installed:
 
 ```
 $ go get -t github.com/otiai10/gosseract
