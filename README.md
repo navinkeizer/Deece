@@ -202,6 +202,34 @@ other relevant go packages can then be installed:
 $ go env GIT_TERMINAL_PROMPT=1
 $ go get -t github.com/otiai10/gosseract
 $ go get github.com/navinkeizer/Deece
+$ go get github.com/gorilla/mux 
+$ go get github.com/ipfs/go-ipfs-api 
+$ go get github.com/wealdtech/go-ens/v3 
+$ go get github.com/otiai10/gosseract/v2 
+$ go get github.com/ethereum/go-ethereum 
+$ go get github.com/ipfs/go-cid 
+$ go get github.com/multiformats/go-multibase 
+$ go get github.com/pkg/errors 
+$ go get github.com/wealdtech/go-multicodec 
+$ go get github.com/bbalet/stopwords 
+$ go get github.com/gen2brain/go-fitz 
+$ go get github.com/multiformats/go-multiaddr 
+$ go get github.com/deckarep/golang-set
+$ go get github.com/ipfs/go-cid
+$ go get github.com/gen2brain/go-fitz
+$ go get github.com/go-stack/stack
+$ go get github.com/gorilla/websocket
+$ go get github.com/ipfs/go-cid
+$ go get github.com/ipfs/go-dnslink
+$ go get github.com/ipfs/go-ipfs-api
+$ go get github.com/multiformats/go-multibase
+$ go get github.com/otiai10/gosseract
+$ go get github.com/pkg/errors
+$ go get github.com/shirou/gopsutil/cpu
+$ go get github.com/wealdtech/go-ens
+$ go get github.com/wealdtech/go-multicodec
+$ go get golang.org/x/crypto/sha3
+$ go get golang.org/x/sys/unix
 ```
 
 and the CLI built:
