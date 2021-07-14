@@ -177,8 +177,6 @@ git clone github.com/navinkeizer/Deece
 ```
 Next [tesseract-ocr](https://tesseract-ocr.github.io/tessdoc/Installation.html) needs to be installed, as well as other dependencies. For Linux this may look like this: 
 ```shell
-sudo apt-get install tesseract-ocr # or sudo apt install tesseract-ocr
-sudo apt install libtesseract-dev
 sudo apt-get install g++ 
 sudo apt-get install autoconf automake libtool
 sudo apt-get install autoconf-archive
@@ -194,6 +192,8 @@ sudo ./configure &&\
 sudo apt install make
 sudo make &&\
 sudo make install
+sudo apt-get install tesseract-ocr # or sudo apt install tesseract-ocr
+sudo apt install libtesseract-dev
 ```
 
 other relevant Go packages may then be installed:
