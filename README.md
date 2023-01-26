@@ -1,14 +1,14 @@
 <img src="./images/DEECElogo.png" width="500" >
 
 
-# Deece
+# Deece Search
 
 [![cli passing](https://img.shields.io/badge/cli-passing-green)](CLI)
 [![library passing](https://img.shields.io/badge/library-passing-blue)](Deece)
 [![readme deece](https://img.shields.io/badge/readme-deece-red)](README.md)
 [![license deece](https://img.shields.io/badge/license-Apache%202-orange)](LICENSE)
 
-Deece is an open, collaborative, and decentralised search mechanism for IPFS. Any node running the client is able to crawl content on IPFS and add this to the index, which itself is stored in a decentralised manner on IPFS. This allows for decentralised search on decentralised content. 
+Deece Search is an open, collaborative, and decentralised search mechanism for IPFS. Any node running the client is able to crawl content on IPFS and add this to the index, which itself is stored in a decentralised manner on IPFS. This allows for decentralised search on decentralised content. 
 
 
 ***The current implementation is still highly experimental. We are working on the second version without central gateway and automatic crawling, so for the time being our server is down.***
@@ -38,17 +38,17 @@ Deece is an open, collaborative, and decentralised search mechanism for IPFS. An
 
 ## Overview
 
-Deece allows for decentralised search on IPFS data. This is achieved by a network of IPFS nodes who participate in crawling and indexing of the data on the network. The index is stored on IPFS, and split up into a two-layer hierarchy, the first being the *Top Level Index* (TLI) and the second being the *Keyword Specific Indexes* (KSI). The TLI contains the identifiers (CID) for the KSI for each keyword, and is constantly updated when a node submits a crawl. When crawling, the nodes add to the current KSI a list of the identifiers of files that contain that keyword. 
+Deece Search allows for decentralised search on IPFS data. This is achieved by a network of IPFS nodes who participate in crawling and indexing of the data on the network. The index is stored on IPFS, and split up into a two-layer hierarchy, the first being the *Top Level Index* (TLI) and the second being the *Keyword Specific Indexes* (KSI). The TLI contains the identifiers (CID) for the KSI for each keyword, and is constantly updated when a node submits a crawl. When crawling, the nodes add to the current KSI a list of the identifiers of files that contain that keyword. 
 
 
 <img src="./images/indexes.jpg" width="550" >
 
 
-Deece allows for two specific actions: `search` and `crawl`. Search queries the latest TLI to find the KSI for each keyword in the user query, and then fetches the results from these, which are displayed to the user. Currently ranking of results is ordered based on CID, but more sophisticated mechanisms should be developed. We allow for combined results for up to two keywords, which will be extended in the future. 
+Deece Search allows for two specific actions: `search` and `crawl`. Search queries the latest TLI to find the KSI for each keyword in the user query, and then fetches the results from these, which are displayed to the user. Currently ranking of results is ordered based on CID, but more sophisticated mechanisms should be developed. We allow for combined results for up to two keywords, which will be extended in the future. 
 
-There are currently three ways to access Deece. First, there is the client software which uses a command line interface. Second, we have implemented a gateway service(www.deece.nl/web/), which runs an instance of our client node and allows "light clients" to interact with the search without installing other software. Finally, we have released our code used by the CLI and gateway in the form of a Go library.  
+There are currently three ways to access Deece Search. First, there is the client software which uses a command line interface. Second, we have implemented a gateway service(www.deece.nl/web/), which runs an instance of our client node and allows "light clients" to interact with the search without installing other software. Finally, we have released our code used by the CLI and gateway in the form of a Go library.  
 
-*The initial version of Deece relies on a trusted node (the same node as our gateway) to update the IPNS record pointing to the latest version of the TLI. When clients crawl, the final step involves them sending an update request to this server. At the moment, clients will need to specify a password in their config file, which can be obtained from the maintainers, as security measures will be implemented later.*
+*The initial version of Deece Search relies on a trusted node (the same node as our gateway) to update the IPNS record pointing to the latest version of the TLI. When clients crawl, the final step involves them sending an update request to this server. At the moment, clients will need to specify a password in their config file, which can be obtained from the maintainers, as security measures will be implemented later.*
 
 
 ### Motivation
@@ -116,7 +116,7 @@ Furthermore, updating our IPNS entry from the gateway can be very slow, and may 
 
 ## Components
 
-There are a number of ways to access Deece: 
+There are a number of ways to access Deece Search: 
 
 ### `Client`
 
@@ -160,7 +160,7 @@ For easy and lightweight access we have implemented a gateway for our search cli
 
 ### `Library`
 
-Both the CLI and gateway run using our Deece package for Go. We have released this, as this can be used for easy integrations and extensions. 
+Both the CLI and gateway run using our Deece Search package for Go. We have released this, as this can be used for easy integrations and extensions. 
 
 
 
@@ -168,7 +168,7 @@ Both the CLI and gateway run using our Deece package for Go. We have released th
 
 ***Further installation instructions will be added once tested across different platforms. For now we have provided instructions based on our installation on Linux.***
 
-For Deece to work there are a number of requirements and dependencies. To run as a client, a local IPFS daemon needs to be running, and to speed up results it helps to add the gateway maintaining the TLI in the peer swarm. To submit changes to the TLI as a client a password is required. Finally, a config file needs to be present in the same directory as the executable to load results. An incomplete config file can be found in this repository.  
+For Deece Search to work there are a number of requirements and dependencies. To run as a client, a local IPFS daemon needs to be running, and to speed up results it helps to add the gateway maintaining the TLI in the peer swarm. To submit changes to the TLI as a client a password is required. Finally, a config file needs to be present in the same directory as the executable to load results. An incomplete config file can be found in this repository.  
 
 ### Client CLI
 
@@ -234,7 +234,7 @@ go get github.com/navinkeizer/Deece
 
 ## Project Status
 
-The current implementation of Deece is still experimental, and therefore may experience instabilities. As described in this document, we have made simplifying assumptions (altruism) and focused on limited functionality (PDF only). Furthermore, the gateway presents a centralised aspect, which in the future should be replaced by decentralised network consensus, and the protocol should be secured by incentives. 
+The current implementation of Deece Search is still experimental, and therefore may experience instabilities. As described in this document, we have made simplifying assumptions (altruism) and focused on limited functionality (PDF only). Furthermore, the gateway presents a centralised aspect, which in the future should be replaced by decentralised network consensus, and the protocol should be secured by incentives. 
 
 Our implementation takes a first principle approach. We aimed to build from the ground up, rather than relying on existing approaches and solutions for system components. We believe this is necessary as existing solutions may not be optimal for decentralised Web3 content. In other words, there is much work to be done.
 
