@@ -11,7 +11,7 @@
 Deece Search is an open, collaborative, and decentralised search mechanism for IPFS. Any node running the client is able to crawl content on IPFS and add this to the index, which itself is stored in a decentralised manner on IPFS. This allows for decentralised search on decentralised content. 
 
 
-***The current implementation is still highly experimental. We are working on the second version without central gateway and automatic crawling, so for the time being our server is down.***
+***The current implementation is still highly experimental. We are working on the future versions without central gateway and are exploring alternative search mechanisms. Our current server is down, and the project has not been maintained .***
 
 
 
