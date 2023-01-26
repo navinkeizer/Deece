@@ -3,8 +3,8 @@
 
 # Deece Search
 
-[![cli passing](https://img.shields.io/badge/cli-passing-green)](CLI)
-[![library passing](https://img.shields.io/badge/library-passing-blue)](Deece)
+<!-- [![cli passing](https://img.shields.io/badge/cli-passing-green)](CLI) -->
+<!-- [![library passing](https://img.shields.io/badge/library-passing-blue)](Deece) -->
 [![readme deece](https://img.shields.io/badge/readme-deece-red)](README.md)
 [![license deece](https://img.shields.io/badge/license-Apache%202-orange)](LICENSE)
 
